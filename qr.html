@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earn the Shelf · Printable QR Codes</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F6F1E7;
+      --forest: #123524;
+      --green: #2E7D4F;
+      --marigold: #E9A23B;
+      --border: rgba(18, 53, 36, 0.15);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--cream);
+      color: var(--forest);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 2.5rem 1.5rem;
+      line-height: 1.5;
+    }
+    header {
+      max-width: 960px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    p.subtitle {
+      font-size: 1rem;
+      color: #556B5D;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .print-bar {
+      margin-top: 1.25rem;
+    }
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--forest);
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(18, 53, 36, 0.15);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn-print:hover {
+      background: var(--green);
+      transform: translateY(-1px);
+    }
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .qr-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(18, 53, 36, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      break-inside: avoid;
+    }
+    .qr-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(46, 125, 79, 0.12);
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+    .qr-img-wrap {
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 1 / 1;
+      padding: 0.5rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+    }
+    .qr-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .qr-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.35rem;
+    }
+    .qr-caption {
+      font-size: 0.85rem;
+      color: #617367;
+      margin-bottom: 1rem;
+      min-height: 2.6em;
+    }
+    .qr-link {
+      font-family: monospace;
+      font-size: 0.8rem;
+      word-break: break-all;
+      background: #F8F9FA;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: #2F4F3B;
+      text-decoration: none;
+      border: 1px solid rgba(18, 53, 36, 0.08);
+      display: block;
+      width: 100%;
+    }
+    .qr-link:hover {
+      text-decoration: underline;
+      color: var(--green);
+    }
+    .download-link {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .download-link:hover {
+      text-decoration: underline;
+    }
+    footer {
+      max-width: 960px;
+      margin: 3.5rem auto 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #7D8E82;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+    @media print {
+      body {
+        background: #FFFFFF;
+        padding: 0;
+      }
+      .print-bar, .download-link, footer {
+        display: none;
+      }
+      .qr-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .qr-card {
+        box-shadow: none;
+        border: 1px solid #CCC;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="qr-tag" style="background: rgba(233, 162, 59, 0.2); color: #B26A00;">High-Contrast Print Ready (1000×1000)</span>
+    <h1>Earn the Shelf · QR Directory</h1>
+    <p class="subtitle">Scannable point-of-sale tent cards and demonstration entry points. Verified with 4-module quiet zone error correction.</p>
+    <div class="print-bar">
+      <button class="btn-print" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Print QR Sheet
+      </button>
+    </div>
+  </header>
+
+  <main class="qr-grid">
+    <!-- QR 1: Unlock -->
+    <article class="qr-card">
+      <span class="qr-tag">Screen 1 · Pre-Commit</span>
+      <div class="qr-img-wrap">
+        <img src="qr/qr-unlock.png" alt="QR Code for Unlock Screen" width="1000" height="1000">
+      </div>
+      <h2 class="qr-title">Pre-Commit Gate</h2>
+      <p class="qr-caption">Direct community member scan to commit opening week packs for local catchment unlock.</p>
+      <a href="https://earn-the-shelf.vercel.app/#unlock" class="qr-link" target="_blank" rel="noopener">https://earn-the-shelf.vercel.app/#unlock</a>
+      <a href="qr/qr-unlock.png" download="qr-unlock.png" class="download-link">Download PNG (1000×1000)</a>
+    </article>
+
+    <!-- QR 2: Anchor -->
+    <article class="qr-card">
+      <span class="qr-tag">Screen 2 · POS Anchor</span>
+      <div class="qr-img-wrap">
+        <img src="qr/qr-anchor.png" alt="QR Code for Anchor Screen" width="1000" height="1000">
+      </div>
+      <h2 class="qr-title">Anchor Experience</h2>
+      <p class="qr-caption">On-counter tent card displays for gyms, apartments, offices, and wellness clinics.</p>
+      <a href="https://earn-the-shelf.vercel.app/#anchor" class="qr-link" target="_blank" rel="noopener">https://earn-the-shelf.vercel.app/#anchor</a>
+      <a href="qr/qr-anchor.png" download="qr-anchor.png" class="download-link">Download PNG (1000×1000)</a>
+    </article>
+
+    <!-- QR 3: Ledger -->
+    <article class="qr-card">
+      <span class="qr-tag">Screen 3 · Governance</span>
+      <div class="qr-img-wrap">
+        <img src="qr/qr-ledger.png" alt="QR Code for Ledger Screen" width="1000" height="1000">
+      </div>
+      <h2 class="qr-title">Demand Ledger</h2>
+      <p class="qr-caption">Pincode governance, store qualification hurdles, and wastage liability control tower.</p>
+      <a href="https://earn-the-shelf.vercel.app/#ledger" class="qr-link" target="_blank" rel="noopener">https://earn-the-shelf.vercel.app/#ledger</a>
+      <a href="qr/qr-ledger.png" download="qr-ledger.png" class="download-link">Download PNG (1000×1000)</a>
+    </article>
+  </main>
+
+  <footer>
+    <p>Earn the Shelf · Akshayakalpa Organic High Protein Cold Coffee · Concept prototype · Built for case competition</p>
+  </footer>
+</body>
+</html>
