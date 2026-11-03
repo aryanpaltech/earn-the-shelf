@@ -3060,10 +3060,10 @@
         // Pre-commit stage
         const appFirstSuffix = c.appFirst ? ' (app-first)' : '';
         if (c.packs >= CONSTANTS.THRESHOLD) {
-          stage = `Threshold reached${appFirstSuffix}`;
+          stage = `Complete${appFirstSuffix}`;
           status = 'green';
-          statusText = 'Unlocked';
-          detailNote = 'Ready for app proving phase';
+          statusText = 'Complete';
+          detailNote = 'Threshold reached (84/84). Ready for app proving phase.';
         } else {
           stage = `Pre-commit open${appFirstSuffix}`;
           status = 'amber';
@@ -3371,7 +3371,7 @@
           DOM.gateIcon.classList.remove('gate-open');
           DOM.unlockHeading.textContent = 'Unlock HP Coffee for your area.';
           DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs needed.`;
-          DOM.neighbourSubline.textContent = 'Window expired. No stock dispatched. Zero retail waste.';
+          DOM.neighbourSubline.textContent = 'Window expired. No stock dispatched. No retail waste.';
         } else if (packs >= target || DATA.unlockedOverride) {
           // Unlocked state (at >=84 gate opens, further commits accepted, headline stays "Unlocked")
           DOM.unlockStateBanner.style.display = 'block';
@@ -3969,11 +3969,6 @@
             <text x="${scaleX(w)}" y="172" text-anchor="middle" font-size="10" font-weight="600" fill="#677A6E">W${w}</text>
           `).join('')}
         `;
-      }).join('')}
-
-          <!-- Week Labels -->
-          ${Array.from({ length: totalWeeks }, (_, i) => i + 1).map(w => `<text x="${stepX * w}" y="155" text-anchor="middle" font-size="9" fill="#7D7465">W${w}</text>`).join('')}
-        `;
       }
 
       // Action Handlers
@@ -4055,6 +4050,19 @@
         DOM.funnelProvedConversion.textContent = funnel.provedConversion;
         DOM.funnelLiveQC.textContent = funnel.liveQC;
         DOM.funnelNextRing.textContent = funnel.nextRing === 1 ? '1 (Ring B)' : '0 (Pending)';
+
+        // Update progress bar widths
+        const fillTotal = document.getElementById('funnelFillTotal');
+        const fill84 = document.getElementById('funnelFill84');
+        const fillConv = document.getElementById('funnelFillConv');
+        const fillQC = document.getElementById('funnelFillQC');
+        const fillRing = document.getElementById('funnelFillRing');
+
+        if (fillTotal) fillTotal.style.width = '100%';
+        if (fill84) fill84.style.width = `${(funnel.reached84 / funnel.total) * 100}%`;
+        if (fillConv) fillConv.style.width = `${(funnel.provedConversion / funnel.total) * 100}%`;
+        if (fillQC) fillQC.style.width = `${(funnel.liveQC / funnel.total) * 100}%`;
+        if (fillRing) fillRing.style.width = `${(funnel.nextRing / funnel.total) * 100}%`;
       }
 
       // Who Pays Liability Slider
@@ -4269,7 +4277,7 @@
         },
         {
           tag: 'Step 4 of 5',
-          title: 'Zero Waste Feasibility Rule',
+          title: 'Demand Feasibility Hurdle',
           quote: "If it doesn't fill, nothing ships. Nothing is wasted.",
           detail: 'If a catchment fails to cross the 84-pack hurdle after 14 days, the window closes cleanly without a single carton being produced or wasted.',
           targetSelector: '#notFilledStateBanner',
