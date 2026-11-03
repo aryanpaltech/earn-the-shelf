@@ -288,6 +288,15 @@
       }
     }
 
+    .ui-icon {
+      display: inline-block;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      stroke: var(--forest-green);
+      flex-shrink: 0;
+    }
+
     /* TYPOGRAPHY */
     h1,
     h2,
@@ -1728,10 +1737,10 @@
 
       <div class="header-actions">
         <button class="btn-tour-trigger" id="openTourBtn" aria-label="Open 30-second guided tour">
-          📖 30s Tour
+          <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> <span>30s Tour</span>
         </button>
         <button class="btn-demo-trigger" id="openDemoBtn" aria-label="Open Demo Controls Drawer">
-          ⚡ Demo Controls
+          <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span>Demo Controls</span>
         </button>
       </div>
     </div>
@@ -1758,7 +1767,10 @@
       <div id="notFilledStateBanner" class="state-banner not-filled">
         <span class="state-pill" style="color: var(--terracotta);">Threshold not reached</span>
         <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Not enough neighbours yet.</h3>
-        <p style="font-size: 0.88rem;">Nothing ships. No waste. We'll try again after the next round.</p>
+        <p style="font-size: 0.88rem;">Not enough neighbours yet. Nothing ships, so nothing is wasted. We'll try again after the next round.</p>
+        <button class="btn btn-secondary" id="btnStartNextRound" style="margin-top: 0.75rem; min-height: 38px; font-size: 0.82rem; border-color: var(--forest-green); color: var(--forest-green);">
+          Start next round
+        </button>
       </div>
 
       <div class="unlock-container">
@@ -1773,7 +1785,7 @@
                   stroke-dasharray="659.73" stroke-dashoffset="172.7"></circle>
               </svg>
               <div class="ring-content">
-                <span class="ring-gate-icon" id="gateIcon" title="Gate Status">🔒</span>
+                <span class="ring-gate-icon" id="gateIcon" title="Gate Status"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
                 <span class="ring-packs-number" id="ringPacksCount">62</span>
                 <span class="ring-packs-target">/ 84 packs</span>
               </div>
@@ -1800,11 +1812,7 @@
             <summary>Why 84 packs?</summary>
             <div class="explainer-content">
               <p style="margin-top: 0.75rem;">
-                <strong>84 packs is 60% of your store's opening week</strong> (20 packs a day × 7 = 140 packs).
-              </p>
-              <p style="margin-top: 0.5rem;">
-                When we reach it, stock lands pre-sold directly into local refrigeration. No unsold cartons sit rotting
-                on shelves, keeping retail waste near zero.
+                84 packs is 60% of your store's opening week (20 packs a day × 7 = 140). When we reach it, stock lands pre-sold. Nothing ships on hope.
               </p>
             </div>
           </details>
@@ -1816,28 +1824,28 @@
               <p>Help decide which variant unlocks the next HP Milk variant.</p>
             </div>
             <button class="btn btn-secondary" id="openFlavourVoteBtn" style="min-height: 40px; font-size: 0.85rem;">
-              Vote Flavour 🗳️
+              Vote next flavour
             </button>
           </div>
         </div>
 
         <!-- Right Column: Interactive Pre-Commit Form -->
         <div class="precommit-form">
-          <h1 class="page-title" id="unlockHeading" style="font-size: 2.1rem;">Unlock HP Milk for your area.</h1>
+          <h1 class="page-title" id="unlockHeading" style="font-size: 2.1rem;">Unlock HP Coffee for your area.</h1>
           <p class="page-subtitle" style="margin-bottom: 1.5rem;">
             Pre-commit now. Nothing ships until your neighbours say yes.
           </p>
 
           <div class="stepper-container">
             <div class="stepper-label">
-              <span>Select your weekly commitment</span>
+              <span>Your packs for the opening week</span>
               <span id="packQuantityLabel" style="color: var(--secondary-green); font-weight: 700;">3 packs</span>
             </div>
             <div class="stepper-control">
               <button class="step-btn" id="btnMinusPack" aria-label="Decrease packs">−</button>
               <div class="step-value-wrap">
                 <span class="step-value" id="stepperDisplay">3</span>
-                <span class="step-subtext">packs / week</span>
+                <span class="step-subtext">packs</span>
               </div>
               <button class="step-btn" id="btnPlusPack" aria-label="Increase packs">+</button>
             </div>
@@ -1856,13 +1864,12 @@
           </button>
 
           <div id="precommitSuccessToast" class="user-feedback-toast" role="status">
-            ✨ <strong>Commitment recorded!</strong> Your packs are added to your pincode's live tally.
+            <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span id="toastMessageText">You're in. 22 more packs to unlock.</span>
           </div>
 
           <div
-            style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
-            <p><strong>Note for prototype review:</strong> No payment or sensitive info is requested. Pre-commits serve
-              as an aggregate demand signal.</p>
+            style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: #7F8D84;">
+            <p>No payment or personal data is requested. Pre-commits are an aggregate demand signal.</p>
           </div>
         </div>
 
@@ -1885,16 +1892,16 @@
         <!-- Segmented Navigation Switch -->
         <div class="segmented-switch" role="tablist" aria-label="Select Anchor Experience">
           <button class="segment-tab-btn active" data-exp="gym" role="tab" aria-selected="true" id="tabGym">
-            🏋️ Gym Experience
+            <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1a3 3 0 0 0-4.24 0l-.88.88a1 1 0 0 1-1.42 0l-7.76-7.76a1 1 0 0 1 0-1.42l.88-.88a3 3 0 0 0 0-4.24l-1-1a1 1 0 0 0-1.42 0l-1.58 1.58a2 2 0 0 0 0 2.83l1.17 1.17"/><path d="m14.5 9.5 2.5-2.5"/><path d="m11.5 12.5 2.5-2.5"/></svg> <span>Gym Experience</span>
           </button>
           <button class="segment-tab-btn" data-exp="apartment" role="tab" aria-selected="false" id="tabApartment">
-            🏢 Apartment
+            <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M16 14h.01"/></svg> <span>Apartment</span>
           </button>
           <button class="segment-tab-btn" data-exp="office" role="tab" aria-selected="false" id="tabOffice">
-            💼 Office Pantry
+            <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <span>Office Pantry</span>
           </button>
           <button class="segment-tab-btn" data-exp="dietitian" role="tab" aria-selected="false" id="tabDietitian">
-            🩺 Dietitian Clinic
+            <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> <span>Dietitian Clinic</span>
           </button>
         </div>
 
@@ -1907,7 +1914,7 @@
 
             <div class="product-info-pill-box">
               <div class="protein-badge">
-                🥛 25 g protein per pack
+                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg> <span>25 g protein per pack</span>
               </div>
               <p class="product-source-claim" id="expSubclaim">
                 Organic milk from farms we can name.
@@ -1927,14 +1934,14 @@
               </span>
               <div class="star-rating-stars" id="starRatingGroup" role="radiogroup"
                 aria-label="Taste rating from 1 to 5">
-                <button class="star-btn rated" data-val="1" aria-label="1 star">★</button>
-                <button class="star-btn rated" data-val="2" aria-label="2 stars">★</button>
-                <button class="star-btn rated" data-val="3" aria-label="3 stars">★</button>
-                <button class="star-btn rated" data-val="4" aria-label="4 stars">★</button>
-                <button class="star-btn rated" data-val="5" aria-label="5 stars">★</button>
+                <button class="star-btn" data-val="1" aria-label="1 star">★</button>
+                <button class="star-btn" data-val="2" aria-label="2 stars">★</button>
+                <button class="star-btn" data-val="3" aria-label="3 stars">★</button>
+                <button class="star-btn" data-val="4" aria-label="4 stars">★</button>
+                <button class="star-btn" data-val="5" aria-label="5 stars">★</button>
               </div>
               <span id="starRatingFeedback" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">
-                (5/5 rated)
+                Tap to rate
               </span>
             </div>
 
@@ -1948,8 +1955,7 @@
             <div class="reward-panel" id="expRewardPanel">
               <span class="reward-panel-title" id="rewardPanelBadge">Anchor Reward Model</span>
               <p id="rewardExplanationText" style="font-size: 0.92rem; color: var(--forest-green); line-height: 1.5;">
-                This gym earns 1 product pack for every 10 packs its members buy in their first 8 weeks, as product,
-                never cash.
+                This gym earns 1 free pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.
               </p>
 
               <div class="reward-stats-row" id="rewardStatsRow">
@@ -1976,7 +1982,7 @@
                 Placed at reception desks and checkout counters to anchor QR traffic.
               </p>
             </div>
-            <span class="status-chip">350gsm Matte Cardboard · Front & Back</span>
+            
           </div>
 
           <div class="tent-card-views">
@@ -2015,17 +2021,16 @@
                 </p>
                 <div class="tent-back-reward" id="tentBackRewardBox">
                   <p id="tentBackRewardTitle" style="font-size: 0.85rem; color: var(--forest-green); font-weight: 600;">
-                    🎁 Partner Incentive Structure:
+                    Partner Incentive Structure:
                   </p>
                   <p id="tentBackRewardText"
                     style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.35rem; line-height: 1.45;">
-                    This gym earns 1 product pack for every 10 packs its members buy in their first 8 weeks, as product,
-                    never cash.
+                    This gym earns 1 free pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.
                   </p>
                 </div>
               </div>
               <p id="tentBackFootnote" style="font-size: 0.78rem; color: #7F8D84; margin-top: 1rem; line-height: 1.4;">
-                Proof-of-demand aligns local communities before retail refrigeration stock is committed.
+                Neighbours say yes first. Then stock ships.
               </p>
             </div>
 
@@ -2054,13 +2059,13 @@
           <div class="kpi-card">
             <span class="kpi-title">Launch Wastage Target</span>
             <span class="kpi-value" style="color: var(--secondary-green);">≤12%</span>
-            <span class="kpi-note">Target by week 6 on quick-commerce</span>
+            <span class="kpi-note">Launch wastage target: ≤12% by week 6 after quick-commerce launch</span>
           </div>
 
           <div class="kpi-card">
             <span class="kpi-title">SKU Delistings Target</span>
             <span class="kpi-value">0</span>
-            <span class="kpi-note">Zero stock-outs & zero churn delistings</span>
+            <span class="kpi-note">A paused store isn't a delisting.</span>
           </div>
 
           <div class="kpi-card">
@@ -2079,7 +2084,7 @@
         <!-- Date Presets Panel -->
         <div class="date-preset-panel">
           <div class="preset-label">
-            <span>📅 Fast-forward Timeline Presets:</span>
+            <span style="display:inline-flex; align-items:center; gap:0.4rem;"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span>Fast-forward Timeline Presets:</span></span>
           </div>
           <div class="preset-buttons" role="group" aria-label="Timeline Presets">
             <button class="preset-btn active" data-day="14" id="presetDay14">
@@ -2166,12 +2171,14 @@
 
             <!-- Business Action Controls -->
             <div class="action-controls-box">
-              <span style="font-size: 0.8rem; font-weight: 600; color: var(--forest-green);">Catchment Governance
-                Controls:</span>
+              <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--forest-green);">Catchment Governance Controls:</span>
+                <span id="lastActionNotice" style="font-size: 0.75rem; color: var(--secondary-green); font-weight: 600;">Last action: None</span>
+              </div>
 
               <!-- 1. Release to Quick-Commerce Button -->
               <button class="btn-action-control btn-primary" id="btnReleaseQC">
-                🚀 Release to Quick-Commerce (Ring A)
+                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> <span>Release to Quick-Commerce (Ring A)</span>
               </button>
               <div class="action-reason-hint" id="qcDisabledReason">
                 Requires: ≥84 pre-commits, ≥70% conversion, and 4 app weeks completed.
@@ -2180,17 +2187,23 @@
               <!-- 2. Pause Store Button -->
               <button class="btn-action-control btn-secondary" id="btnPauseStore"
                 style="border-color: var(--terracotta); color: var(--terracotta);">
-                ⏸️ Pause Store (Store, not product)
+                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> <span>Pause Store (Store, not product)</span>
               </button>
 
               <!-- 3. Open Next Ring Button -->
               <button class="btn-action-control btn-secondary" id="btnOpenNextRing"
                 style="border-color: var(--secondary-green); color: var(--secondary-green);">
-                🔓 Open Next Ring (1 of 2 weeks held)
+                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> <span>Open Next Ring (1 of 2 weeks held)</span>
               </button>
               <div class="action-reason-hint" id="ringDisabledReason">
                 Requires wastage to stay ≤12% for 2 consecutive weeks.
               </div>
+
+              <!-- 4. Advance 1 Week Button (for quick-commerce rows to simulate week 7 at 10%) -->
+              <button class="btn-action-control btn-secondary" id="btnAdvanceWeek" style="border-color: var(--secondary-green); color: var(--secondary-green); display: none;">
+                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+                <span>Advance 1 week (simulate next batch)</span>
+              </button>
             </div>
 
           </div>
@@ -2241,7 +2254,7 @@
                 id="weekSliderLabel">Week 4</span>
             </div>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
-              Contractual absorption shifts as catchment proves velocity.
+              Proposed terms, not agreed with any platform
             </p>
 
             <div class="slider-wrap">
@@ -2256,7 +2269,7 @@
             </div>
 
             <div class="payer-status-display" id="payerStatusOutput">
-              Weeks 1–4: We pay 100% of launch buffer
+              Weeks 1–4: we pay 100% of wasted packs
             </div>
           </div>
 
@@ -2264,7 +2277,7 @@
           <div class="advanced-card">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <h4 style="font-size: 1.05rem;">Day-90 Run-Rate Rule Engine</h4>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Commercial gate</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Day-90 call</span>
             </div>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
               Evaluate volume run-rate across Ring A & B to trigger next investment.
@@ -2276,9 +2289,23 @@
               <button class="preset-btn" id="btnRateLow" data-rate="3900">&lt;4.8k L/day</button>
             </div>
 
+            <div class="slider-wrap" style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem;">
+                <span style="font-size: 0.78rem; color: var(--text-muted);">Exit Run-Rate (k L/day):</span>
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--forest-green);" id="runRateSliderLabel">6.3k L/day</span>
+              </div>
+              <input type="range" id="runRateSlider" min="3.0" max="10.0" value="6.3" step="0.1" aria-label="Exit run rate slider 3.0 to 10.0k L per day">
+              <div class="slider-ticks">
+                <span>3.0k</span>
+                <span>4.8k (Floor)</span>
+                <span>6.3k (Stretch)</span>
+                <span>10.0k</span>
+              </div>
+            </div>
+
             <div class="decision-display-pill" id="decisionPill"
-              style="background: var(--green-light); color: var(--forest-green);">
-              Strategy: Stay on stretch (Scale Ring B + C)
+              style="background: var(--green-light); color: var(--forest-green); margin-top: 1rem; line-height: 1.4;">
+              Strategy: Stay on stretch: Ring B opens end-Jan, Ring C by mid-Mar
             </div>
           </div>
 
@@ -2328,7 +2355,7 @@
       <div class="demo-control-item">
         <button class="btn btn-secondary" id="btnDemoUnlock"
           style="width: 100%; border-color: var(--secondary-green); color: var(--secondary-green);">
-          🔓 Fast-forward to unlocked
+          <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> <span>Fast-forward to unlocked</span>
         </button>
         <p>Sets packs to 84 (60% threshold) and triggers open gate state.</p>
       </div>
@@ -2337,15 +2364,15 @@
       <div class="demo-control-item">
         <button class="btn btn-secondary" id="btnDemoShort"
           style="width: 100%; border-color: var(--terracotta); color: var(--terracotta);">
-          ⏳ 14 days later, still short
+          <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span>14 days later, still short</span>
         </button>
-        <p>Sets packs to 70 and displays the not-filled zero-waste state.</p>
+        <p>Sets packs to 70 and shows the not-filled state.</p>
       </div>
 
       <!-- 4. Reset -->
       <div class="demo-control-item">
         <button class="btn btn-secondary" id="btnDemoReset" style="width: 100%;">
-          🔄 Reset prototype state
+          <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg> <span>Reset prototype state</span>
         </button>
         <p>Restores initial baseline: 62 packs, 21 neighbours, initial ledger.</p>
       </div>
@@ -2390,33 +2417,33 @@
   <div class="modal-overlay" id="flavourModalOverlay" role="dialog" aria-modal="true"
     aria-labelledby="flavourModalTitle">
     <div class="tour-modal-card" style="max-width: 500px;">
-      <h3 class="tour-slide-title" id="flavourModalTitle">Vote Your Next Flavour</h3>
+      <h3 class="tour-slide-title" id="flavourModalTitle">Vote next flavour</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted);">
-        Vote which organic variant should unlock next in your pincode. Live aggregate votes:
+        Vote which flavour unlocks next in your area.
       </p>
 
       <div class="flavour-grid" id="flavourGrid">
-        <div class="flavour-card" data-flavour="vanilla">
-          <span class="flavour-illustrative-tag">Illustrative</span>
-          <div class="flavour-name">Madagascar Vanilla</div>
+        <div class="flavour-card" data-flavour="chocolate">
+          <span class="flavour-illustrative-tag">illustrative</span>
+          <div class="flavour-name">Chocolate</div>
           <div class="flavour-vote-count">142 votes</div>
         </div>
 
-        <div class="flavour-card" data-flavour="cacao">
-          <span class="flavour-illustrative-tag">Illustrative</span>
-          <div class="flavour-name">Single Origin Cacao</div>
+        <div class="flavour-card" data-flavour="mango">
+          <span class="flavour-illustrative-tag">illustrative</span>
+          <div class="flavour-name">Mango</div>
           <div class="flavour-vote-count">219 votes</div>
         </div>
 
-        <div class="flavour-card" data-flavour="cardamom">
-          <span class="flavour-illustrative-tag">Illustrative</span>
-          <div class="flavour-name">Spiced Elaichi / Cardamom</div>
+        <div class="flavour-card" data-flavour="banana">
+          <span class="flavour-illustrative-tag">illustrative</span>
+          <div class="flavour-name">Banana</div>
           <div class="flavour-vote-count">98 votes</div>
         </div>
 
-        <div class="flavour-card" data-flavour="matcha">
-          <span class="flavour-illustrative-tag">Illustrative</span>
-          <div class="flavour-name">Ceremonial Matcha</div>
+        <div class="flavour-card" data-flavour="almond">
+          <span class="flavour-illustrative-tag">illustrative</span>
+          <div class="flavour-name">Almond</div>
           <div class="flavour-vote-count">115 votes</div>
         </div>
       </div>
@@ -2438,30 +2465,48 @@
       'use strict';
 
       /* -------------------------------------------------------------
-         APPLICATION STATE (In-Memory Only)
+         SINGLE SOURCE OF TRUTH (CONSTANTS & DATA MODEL)
          ------------------------------------------------------------- */
-      const INITIAL_STATE = {
+      const CONSTANTS = {
+        THRESHOLD: 84,
+        OPENING_WEEK: 140, // 20 packs/day * 7
+        UNLOCK_SHARE_PCT: 60, // 84 / 140
+        CONVERSION_BAR: 70, // 70%
+        WASTAGE_TARGET_PCT: 12, // <=12% by week 6 held 2 weeks
+        PAUSE_LINE_PCT: 25, // >25% for 7 days
+        TARGET_PATH: [20, 20, 20, 20, 20, 12], // 20% in weeks 1-5, then 12% in week 6
+        RINGS: {
+          A: '~150',
+          B: '~350',
+          C: '~350'
+        },
+        ANCHORS_BY_DAY: {
+          14: { count: 25, label: '~25', date: '16 Nov', note: 'Day 14 (16 Nov) · ~25 anchors' },
+          45: { count: 150, label: '~150', date: '17 Dec', note: 'Day 45 (17 Dec) · ~150 anchors' },
+          90: { count: 400, label: '~400', date: '31 Jan', note: 'Day 90 (31 Jan) · ~400 anchors' }
+        }
+      };
+
+      const INITIAL_DATA = {
         route: 'unlock',
-        packs: 62,
-        targetPacks: 84, // 60% of 140 (20/day * 7)
-        neighbours: 21,
         userPacksSelected: 3,
         userCommitted: false,
         userCommittedPacks: 0,
         unlockedOverride: false,
         shortOverride: false,
         selectedAnchor: 'gym',
-        tasteRating: 5,
+        tasteRating: 0,
         ledgerDatePreset: 14,
-        anchorsLive: 25,
-        selectedCatchmentId: 4, // Default to Gachibowli (qualifying row)
+        selectedCatchmentId: 4, // Gachibowli by default
         liabilityWeek: 4,
-        runRateVol: 7200,
+        exitRunRate: 6.3, // in k L/day (3.0 to 10.0)
+        ringBExpanded: false,
+        lastAction: 'None',
         flavours: [
-          { id: 'vanilla', name: 'Madagascar Vanilla', votes: 142 },
-          { id: 'cacao', name: 'Single Origin Cacao', votes: 219 },
-          { id: 'cardamom', name: 'Spiced Elaichi / Cardamom', votes: 98 },
-          { id: 'matcha', name: 'Ceremonial Matcha', votes: 115 }
+          { id: 'chocolate', name: 'Chocolate', votes: 142 },
+          { id: 'mango', name: 'Mango', votes: 219 },
+          { id: 'banana', name: 'Banana', votes: 98 },
+          { id: 'almond', name: 'Almond', votes: 115 }
         ],
         userVotedFlavour: null,
         catchments: [
@@ -2469,133 +2514,241 @@
             id: 1,
             name: 'Koramangala',
             city: 'Bengaluru',
-            stage: 'Pre-commit open',
             packs: 62,
-            target: 84,
-            conversion: null,
+            neighbours: 21,
+            type: 'precommit',
+            appFirst: false,
             appWeeks: 0,
+            conversion: null,
             wastageHistory: [],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 2,
             name: 'HSR Layout',
             city: 'Bengaluru',
-            stage: 'Proving on app week 1 of 4',
             packs: 84,
-            target: 84,
-            conversion: 62,
+            neighbours: 28,
+            type: 'proving',
+            appFirst: false,
             appWeeks: 1,
+            conversion: 62,
             wastageHistory: [21],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 3,
             name: 'Whitefield',
             city: 'Bengaluru',
-            stage: 'Proving on app week 3 of 4',
             packs: 91,
-            target: 84,
-            conversion: 68,
+            neighbours: 30,
+            type: 'proving',
+            appFirst: false,
             appWeeks: 3,
+            conversion: 68,
             wastageHistory: [20, 18, 16],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 4,
             name: 'Gachibowli',
             city: 'Hyderabad',
-            stage: 'Ready for Ring A',
             packs: 84,
-            target: 84,
-            conversion: 74,
+            neighbours: 28,
+            type: 'proving',
+            appFirst: false,
             appWeeks: 4,
+            conversion: 74,
             wastageHistory: [19, 16, 14, 12],
-            status: 'green',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 5,
             name: 'Banjara Hills',
             city: 'Hyderabad',
-            stage: 'Quick-commerce week 6',
             packs: 88,
-            target: 84,
-            conversion: 76,
+            neighbours: 29,
+            type: 'qc',
+            appFirst: false,
             appWeeks: 4,
+            conversion: 76,
             wastageHistory: [19, 18, 17, 15, 13, 11],
-            status: 'green',
-            isPaused: false,
-            isReleasedQC: true
+            isReleasedQC: true,
+            isPaused: false
           },
           {
             id: 6,
             name: 'Jayanagar',
             city: 'Bengaluru',
-            stage: 'Quick-commerce week 4',
             packs: 86,
-            target: 84,
-            conversion: 71,
+            neighbours: 29,
+            type: 'qc',
+            appFirst: false,
             appWeeks: 4,
+            conversion: 71,
             wastageHistory: [23, 26, 27, 27],
-            status: 'red',
-            isPaused: false,
-            isReleasedQC: true
+            isReleasedQC: true,
+            isPaused: false
           },
           {
             id: 7,
             name: 'Anna Nagar',
             city: 'Chennai',
-            stage: 'Pre-commit open',
             packs: 41,
-            target: 84,
-            conversion: null,
+            neighbours: 14,
+            type: 'precommit',
+            appFirst: false,
             appWeeks: 0,
+            conversion: null,
             wastageHistory: [],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 8,
             name: 'Powai',
             city: 'Mumbai',
-            stage: 'Pre-commit open (app-first)',
             packs: 70,
-            target: 84,
-            conversion: null,
+            neighbours: 23,
+            type: 'precommit',
+            appFirst: true,
             appWeeks: 0,
+            conversion: null,
             wastageHistory: [],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           },
           {
             id: 9,
             name: 'Kothrud',
             city: 'Pune',
-            stage: 'Pre-commit open (app-first)',
             packs: 55,
-            target: 84,
-            conversion: null,
+            neighbours: 18,
+            type: 'precommit',
+            appFirst: true,
             appWeeks: 0,
+            conversion: null,
             wastageHistory: [],
-            status: 'amber',
-            isPaused: false,
-            isReleasedQC: false
+            isReleasedQC: false,
+            isPaused: false
           }
         ]
       };
 
-      // Active state deep clone
-      let state = JSON.parse(JSON.stringify(INITIAL_STATE));
+      // Single active data model
+      let DATA = JSON.parse(JSON.stringify(INITIAL_DATA));
+
+      /* -------------------------------------------------------------
+         DERIVED ATTRIBUTES & LOGIC RULES
+         ------------------------------------------------------------- */
+      function getConsecutiveQualifyingWeeks(c) {
+        if (!c.wastageHistory || c.wastageHistory.length === 0) return 0;
+        let count = 0;
+        for (let i = c.wastageHistory.length - 1; i >= 0; i--) {
+          if (c.wastageHistory[i] <= CONSTANTS.WASTAGE_TARGET_PCT) {
+            count++;
+          } else {
+            break;
+          }
+        }
+        return count;
+      }
+
+      function deriveCatchmentInfo(c) {
+        let stage = '';
+        let status = 'amber'; // 'green', 'amber', 'red'
+        let statusText = 'In Progress';
+        let detailNote = '';
+
+        if (c.isPaused) {
+          stage = 'Paused. Store, not product.';
+          status = 'red';
+          statusText = 'Paused';
+          detailNote = 'The product stays listed. This store returns to app-only.';
+          return { stage, status, statusText, detailNote };
+        }
+
+        if (c.isReleasedQC) {
+          const weeksOnQC = c.wastageHistory.length;
+          stage = `Quick-commerce week ${weeksOnQC}`;
+          const lastWastage = c.wastageHistory[c.wastageHistory.length - 1];
+          const consec = getConsecutiveQualifyingWeeks(c);
+
+          // Red rule: >25% for 7 days (last week > 25)
+          if (lastWastage > CONSTANTS.PAUSE_LINE_PCT) {
+            status = 'red';
+            statusText = '>25% Wastage';
+            detailNote = `Wastage at ${lastWastage}% exceeds 25% threshold for 7 days`;
+          } else if (consec >= 1) {
+            status = 'green';
+            statusText = 'On Track';
+            detailNote = `${consec} of 2 weeks ≤12%`;
+          } else {
+            // Check against target path: week index clamped to path length
+            const targetForWk = CONSTANTS.TARGET_PATH[Math.min(weeksOnQC - 1, CONSTANTS.TARGET_PATH.length - 1)];
+            if (lastWastage <= targetForWk) {
+              status = 'green';
+              statusText = 'On Track';
+              detailNote = 'Wastage on or below path';
+            } else {
+              status = 'amber';
+              statusText = 'Caution';
+              detailNote = 'Above path but ≤25%';
+            }
+          }
+          return { stage, status, statusText, detailNote };
+        }
+
+        // Proving phase
+        if (c.type === 'proving' || c.appWeeks > 0) {
+          if (c.appWeeks >= 4 && c.conversion >= CONSTANTS.CONVERSION_BAR && c.packs >= CONSTANTS.THRESHOLD) {
+            stage = 'Ready for Ring A';
+            status = 'green';
+            statusText = 'Ready for QC';
+            detailNote = '4 of 4 app weeks done, conversion ≥70%';
+          } else {
+            stage = `Proving on app week ${c.appWeeks} of 4`;
+            if (c.conversion !== null && c.conversion < CONSTANTS.CONVERSION_BAR) {
+              status = 'amber';
+              statusText = 'Hold';
+              detailNote = `conversion ${c.conversion}%, below 70%: hold`;
+            } else {
+              status = 'green';
+              statusText = 'Proving';
+              detailNote = 'Meeting pre-commit velocity';
+            }
+          }
+          return { stage, status, statusText, detailNote };
+        }
+
+        // Pre-commit stage
+        const appFirstSuffix = c.appFirst ? ' (app-first)' : '';
+        if (c.packs >= CONSTANTS.THRESHOLD) {
+          stage = `Threshold reached${appFirstSuffix}`;
+          status = 'green';
+          statusText = 'Unlocked';
+          detailNote = 'Ready for app proving phase';
+        } else {
+          stage = `Pre-commit open${appFirstSuffix}`;
+          status = 'amber';
+          statusText = 'Gathering';
+          detailNote = `${CONSTANTS.THRESHOLD - c.packs} packs needed to open gate`;
+        }
+        return { stage, status, statusText, detailNote };
+      }
+
+      function deriveFunnel() {
+        const total = DATA.catchments.length;
+        const reached84 = DATA.catchments.filter(c => c.packs >= CONSTANTS.THRESHOLD).length;
+        const provedConversion = DATA.catchments.filter(c => c.conversion !== null && c.conversion >= CONSTANTS.CONVERSION_BAR).length;
+        const liveQC = DATA.catchments.filter(c => c.isReleasedQC && !c.isPaused).length;
+        const nextRing = DATA.ringBExpanded ? 1 : 0;
+        return { total, reached84, provedConversion, liveQC, nextRing };
+      }
 
       /* -------------------------------------------------------------
          DOM CACHE
@@ -2618,6 +2771,8 @@
         avatarMoreCount: document.getElementById('avatarMoreCount'),
         unlockStateBanner: document.getElementById('unlockStateBanner'),
         notFilledStateBanner: document.getElementById('notFilledStateBanner'),
+        btnStartNextRound: document.getElementById('btnStartNextRound'),
+        toastMessageText: document.getElementById('toastMessageText'),
         unlockHeading: document.getElementById('unlockHeading'),
         stepperDisplay: document.getElementById('stepperDisplay'),
         packQuantityLabel: document.getElementById('packQuantityLabel'),
@@ -2674,11 +2829,13 @@
         inspectorStageNote: document.getElementById('inspectorStageNote'),
         latestWastageLabel: document.getElementById('latestWastageLabel'),
         wastageChartSvg: document.getElementById('wastageChartSvg'),
+        lastActionNotice: document.getElementById('lastActionNotice'),
         btnReleaseQC: document.getElementById('btnReleaseQC'),
         qcDisabledReason: document.getElementById('qcDisabledReason'),
         btnPauseStore: document.getElementById('btnPauseStore'),
         btnOpenNextRing: document.getElementById('btnOpenNextRing'),
         ringDisabledReason: document.getElementById('ringDisabledReason'),
+        btnAdvanceWeek: document.getElementById('btnAdvanceWeek'),
         funnelCatchments: document.getElementById('funnelCatchments'),
         funnelPacksTarget: document.getElementById('funnelPacksTarget'),
         funnelProvedConversion: document.getElementById('funnelProvedConversion'),
@@ -2687,6 +2844,8 @@
         weekRangeSlider: document.getElementById('weekRangeSlider'),
         weekSliderLabel: document.getElementById('weekSliderLabel'),
         payerStatusOutput: document.getElementById('payerStatusOutput'),
+        runRateSlider: document.getElementById('runRateSlider'),
+        runRateSliderLabel: document.getElementById('runRateSliderLabel'),
         btnRateHigh: document.getElementById('btnRateHigh'),
         btnRateMid: document.getElementById('btnRateMid'),
         btnRateLow: document.getElementById('btnRateLow'),
@@ -2713,24 +2872,19 @@
       };
 
       /* -------------------------------------------------------------
-         ROUTING SYSTEM (Hash Navigation: #unlock, #anchor, #ledger)
+         ROUTING SYSTEM
          ------------------------------------------------------------- */
       function handleRouting() {
         const hash = window.location.hash.toLowerCase();
         let targetRoute = 'unlock';
-
         if (hash === '#anchor') targetRoute = 'anchor';
         else if (hash === '#ledger') targetRoute = 'ledger';
-        else targetRoute = 'unlock';
 
-        state.route = targetRoute;
-
-        // Toggle active screen visibility
+        DATA.route = targetRoute;
         DOM.screenUnlock.classList.toggle('active', targetRoute === 'unlock');
         DOM.screenAnchor.classList.toggle('active', targetRoute === 'anchor');
         DOM.screenLedger.classList.toggle('active', targetRoute === 'ledger');
 
-        // Toggle navigation active class
         DOM.navUnlock.classList.toggle('active', targetRoute === 'unlock');
         DOM.navAnchor.classList.toggle('active', targetRoute === 'anchor');
         DOM.navLedger.classList.toggle('active', targetRoute === 'ledger');
@@ -2741,140 +2895,180 @@
       window.addEventListener('hashchange', handleRouting);
 
       /* -------------------------------------------------------------
-         SCREEN 1: UNLOCK RENDER & LOGIC
+         SCREEN 1: STATE MACHINE & RENDER
          ------------------------------------------------------------- */
       const RING_CIRCUMFERENCE = 2 * Math.PI * 105; // 659.734
+      const SVG_LOCK = `<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+      const SVG_UNLOCK = `<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>`;
 
       function renderUnlockScreen() {
-        const packs = state.packs;
-        const target = state.targetPacks;
+        const koramangala = DATA.catchments.find(c => c.id === 1);
+        const packs = Math.max(0, koramangala.packs || 0);
+        const neighbours = Math.max(0, koramangala.neighbours || 0);
+        const target = CONSTANTS.THRESHOLD;
         const remaining = Math.max(0, target - packs);
-        const fraction = Math.min(packs / target, 1);
+
+        // Ring progress: packs / 84 visually capped at 100%
+        const fraction = Math.min(packs / target, 1.0);
         const offset = RING_CIRCUMFERENCE - (fraction * RING_CIRCUMFERENCE);
-
         DOM.ringCircle.style.strokeDashoffset = offset;
+
+        // Label shows real count (e.g. "91 / 84 packs")
         DOM.ringPacksCount.textContent = packs;
-        DOM.stepperDisplay.textContent = state.userPacksSelected;
-        DOM.packQuantityLabel.textContent = `${state.userPacksSelected} packs`;
-        DOM.avatarMoreCount.textContent = `+${Math.max(0, state.neighbours - 6)}`;
 
-        // Button Stepper bounds
-        DOM.btnMinusPack.disabled = state.userPacksSelected <= 1;
-        DOM.btnPlusPack.disabled = state.userPacksSelected >= 6;
+        // Stepper label & displays
+        DOM.stepperDisplay.textContent = DATA.userPacksSelected;
+        DOM.packQuantityLabel.textContent = `${DATA.userPacksSelected} packs`;
+        DOM.avatarMoreCount.textContent = `+${Math.max(0, neighbours - 6)}`;
 
-        // Button label: initial or editing
-        if (state.userCommitted) {
-          DOM.precommitSubmitBtn.textContent = `Change my packs (now ${state.userPacksSelected} packs)`;
+        // Stepper bounds guard rails (1 to 6)
+        DOM.btnMinusPack.disabled = DATA.userPacksSelected <= 1;
+        DOM.btnPlusPack.disabled = DATA.userPacksSelected >= 6;
+
+        // Submit button text & disabled state based on consent
+        DOM.precommitSubmitBtn.disabled = !DOM.consentCheckbox.checked;
+        if (DATA.userCommitted) {
+          DOM.precommitSubmitBtn.textContent = `Change my packs (now ${DATA.userPacksSelected} packs)`;
         } else {
-          DOM.precommitSubmitBtn.textContent = `I'll take ${state.userPacksSelected} packs (no payment now)`;
+          DOM.precommitSubmitBtn.textContent = `I'll take ${DATA.userPacksSelected} packs (no payment now)`;
         }
 
-        // State variations: Unlocked, Not-Filled, or In-Progress
-        if (state.shortOverride) {
-          // 14 days later, still short
+        // State Machine States
+        if (DATA.shortOverride) {
+          // Not-filled state
           DOM.notFilledStateBanner.style.display = 'block';
           DOM.unlockStateBanner.style.display = 'none';
           DOM.ringCircle.style.stroke = 'var(--terracotta)';
-          DOM.gateIcon.textContent = '🔒';
-          DOM.unlockHeading.textContent = 'Unlock HP Milk for your area.';
-          DOM.neighbourHeadline.textContent = `${state.neighbours} neighbours are in. ${remaining} more packs needed.`;
+          DOM.gateIcon.innerHTML = SVG_LOCK;
+          DOM.unlockHeading.textContent = 'Unlock HP Coffee for your area.';
+          DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs needed.`;
           DOM.neighbourSubline.textContent = 'Window expired. No stock dispatched. Zero retail waste.';
-        } else if (packs >= target || state.unlockedOverride) {
-          // Unlocked state
+        } else if (packs >= target || DATA.unlockedOverride) {
+          // Unlocked state (at >=84 gate opens, further commits accepted, headline stays "Unlocked")
           DOM.unlockStateBanner.style.display = 'block';
           DOM.notFilledStateBanner.style.display = 'none';
           DOM.ringCircle.style.stroke = 'var(--secondary-green)';
-          DOM.gateIcon.textContent = '🔓';
+          DOM.gateIcon.innerHTML = SVG_UNLOCK;
           DOM.unlockHeading.textContent = 'Unlocked. Stock will land pre-sold.';
           DOM.neighbourHeadline.textContent = `Threshold reached (${packs} / ${target} packs)!`;
-          DOM.neighbourSubline.textContent = `${state.neighbours} neighbours joined. Opening order secured.`;
+          DOM.neighbourSubline.textContent = `${neighbours} neighbours joined. Opening order secured.`;
         } else {
-          // Normal in-progress state
+          // Pre-commit-open state
           DOM.unlockStateBanner.style.display = 'none';
           DOM.notFilledStateBanner.style.display = 'none';
           DOM.ringCircle.style.stroke = 'var(--secondary-green)';
-          DOM.gateIcon.textContent = '🔒';
-          DOM.unlockHeading.textContent = 'Unlock HP Milk for your area.';
-          DOM.neighbourHeadline.textContent = `${state.neighbours} neighbours are in. ${remaining} more packs to unlock.`;
+          DOM.gateIcon.innerHTML = SVG_LOCK;
+          DOM.unlockHeading.textContent = 'Unlock HP Coffee for your area.';
+          DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs to unlock.`;
           DOM.neighbourSubline.textContent = '60% demand threshold unlocks store opening week.';
         }
       }
 
-      // Stepper Actions
+      // Stepper Actions with debouncing
+      let lastStepTime = 0;
       DOM.btnMinusPack.addEventListener('click', () => {
-        if (state.userPacksSelected > 1) {
-          state.userPacksSelected--;
+        const now = Date.now();
+        if (now - lastStepTime < 150) return;
+        lastStepTime = now;
+        if (DATA.userPacksSelected > 1) {
+          DATA.userPacksSelected--;
           renderUnlockScreen();
         }
       });
 
       DOM.btnPlusPack.addEventListener('click', () => {
-        if (state.userPacksSelected < 6) {
-          state.userPacksSelected++;
+        const now = Date.now();
+        if (now - lastStepTime < 150) return;
+        lastStepTime = now;
+        if (DATA.userPacksSelected < 6) {
+          DATA.userPacksSelected++;
           renderUnlockScreen();
         }
       });
 
-      // Pre-commit Form Submission
+      DOM.consentCheckbox.addEventListener('change', () => {
+        DOM.precommitSubmitBtn.disabled = !DOM.consentCheckbox.checked;
+      });
+
+      // Submit pre-commit with 300ms double-click guard
+      let lastCommitTime = 0;
       DOM.precommitSubmitBtn.addEventListener('click', () => {
-        if (!DOM.consentCheckbox.checked) {
-          alert('Please check the consent box to confirm demo pre-commitment notification.');
-          DOM.consentCheckbox.focus();
-          return;
-        }
+        const now = Date.now();
+        if (now - lastCommitTime < 300) return; // ignore double click
+        lastCommitTime = now;
 
-        if (!state.userCommitted) {
-          // First time committing
-          state.userCommitted = true;
-          state.userCommittedPacks = state.userPacksSelected;
-          state.packs += state.userPacksSelected;
-          state.neighbours += 1;
+        if (!DOM.consentCheckbox.checked) return;
+
+        const k = DATA.catchments.find(c => c.id === 1);
+        if (!DATA.userCommitted) {
+          // First press adds N packs and 1 neighbour
+          DATA.userCommitted = true;
+          DATA.userCommittedPacks = DATA.userPacksSelected;
+          k.packs += DATA.userPacksSelected;
+          k.neighbours += 1;
+          DATA.lastAction = `Committed ${DATA.userPacksSelected} packs to Koramangala`;
         } else {
-          // Editing existing commitment without being counted twice
-          const diff = state.userPacksSelected - state.userCommittedPacks;
-          state.packs += diff;
-          state.userCommittedPacks = state.userPacksSelected;
+          // Pressing again EDITS your packs, never duplicates
+          const diff = DATA.userPacksSelected - DATA.userCommittedPacks;
+          k.packs += diff;
+          DATA.userCommittedPacks = DATA.userPacksSelected;
+          DATA.lastAction = `Updated commitment to ${DATA.userPacksSelected} packs in Koramangala`;
         }
-
-        // Also sync Koramangala row in ledger table
-        const kRow = state.catchments.find(c => c.id === 1);
-        if (kRow) kRow.packs = state.packs;
 
         renderUnlockScreen();
         renderLedgerTable();
+        renderInspectorPanel();
         updateGateFunnel();
 
-        // Toast feedback
-        DOM.precommitSuccessToast.style.display = 'block';
+        // Toast feedback: "You're in. {84 - packs} more packs to unlock."
+        const remainingToUnlock = Math.max(0, CONSTANTS.THRESHOLD - k.packs);
+        if (DOM.toastMessageText) {
+          DOM.toastMessageText.textContent = remainingToUnlock > 0 
+            ? `You're in. ${remainingToUnlock} more packs to unlock.`
+            : `You're in. Threshold unlocked!`;
+        }
+        DOM.precommitSuccessToast.style.display = 'flex';
         setTimeout(() => {
           DOM.precommitSuccessToast.style.display = 'none';
         }, 4000);
       });
 
+      if (DOM.btnStartNextRound) {
+        DOM.btnStartNextRound.addEventListener('click', () => {
+          DATA.shortOverride = false;
+          DATA.lastAction = 'Started next round on Screen 1';
+          renderUnlockScreen();
+          renderLedgerTable();
+          renderInspectorPanel();
+          updateGateFunnel();
+        });
+      }
+
       /* -------------------------------------------------------------
-         FLAVOUR VOTING MODAL LOGIC
+         FLAVOUR VOTING
          ------------------------------------------------------------- */
       function renderFlavours() {
         DOM.flavourGrid.innerHTML = '';
-        state.flavours.forEach(flv => {
+        DATA.flavours.forEach(flv => {
           const card = document.createElement('div');
-          card.className = `flavour-card ${state.userVotedFlavour === flv.id ? 'selected' : ''}`;
+          card.className = `flavour-card ${DATA.userVotedFlavour === flv.id ? 'selected' : ''}`;
           card.setAttribute('tabindex', '0');
           card.innerHTML = `
-            <span class="flavour-illustrative-tag">Illustrative</span>
+            <span class="flavour-illustrative-tag">illustrative</span>
             <div class="flavour-name">${flv.name}</div>
-            <div class="flavour-vote-count">${flv.votes} votes ${state.userVotedFlavour === flv.id ? '✓ (Your vote)' : ''}</div>
+            <div class="flavour-vote-count">${flv.votes} votes ${DATA.userVotedFlavour === flv.id ? '(Your vote)' : ''}</div>
           `;
           card.addEventListener('click', () => {
-            if (state.userVotedFlavour === flv.id) return;
-            // Decrement previous if any
-            if (state.userVotedFlavour) {
-              const prev = state.flavours.find(f => f.id === state.userVotedFlavour);
+            if (DATA.userVotedFlavour === flv.id) return;
+            if (DATA.userVotedFlavour) {
+              const prev = DATA.flavours.find(f => f.id === DATA.userVotedFlavour);
               if (prev) prev.votes--;
             }
             flv.votes++;
-            state.userVotedFlavour = flv.id;
+            DATA.userVotedFlavour = flv.id;
+            DATA.lastAction = `Voted for ${flv.name} flavour`;
             renderFlavours();
+            if (DOM.lastActionNotice) DOM.lastActionNotice.textContent = `Last action: ${DATA.lastAction}`;
           });
           DOM.flavourGrid.appendChild(card);
         });
@@ -2893,7 +3087,7 @@
       });
 
       /* -------------------------------------------------------------
-         SCREEN 2: ANCHOR EXPERIENCES & TASTE RATING
+         SCREEN 2: ANCHOR EXPERIENCES
          ------------------------------------------------------------- */
       const ANCHOR_EXPERIENCES = {
         gym: {
@@ -2903,7 +3097,7 @@
           showRating: true,
           showRewardPanel: true,
           rewardBadge: 'Gym Reward Model',
-          rewardText: 'This gym earns 1 product pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.',
+          rewardText: 'This gym earns 1 free pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.',
           showRewardStats: true,
           verified: 30,
           earned: '3 packs',
@@ -2915,9 +3109,9 @@
             title: 'Gym Community Partner Program',
             talkingPoints: 'Staff talking points: 25 g protein per pack, organic milk and farmer traceability.',
             showRewardBox: true,
-            rewardTitle: '🎁 Gym Partner Incentive Structure:',
-            rewardText: 'This gym earns 1 product pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.',
-            footnote: 'Proof-of-demand aligns local communities before retail refrigeration stock is committed.'
+            rewardTitle: 'Gym Partner Incentive Structure:',
+            rewardText: 'This gym earns 1 free pack for every 10 packs its members buy in their first 8 weeks, as product, never cash.',
+            footnote: 'Neighbours say yes first. Then stock ships.'
           }
         },
         apartment: {
@@ -2942,9 +3136,9 @@
             title: 'Apartment Community Delivery Run',
             talkingPoints: 'Staff talking points: 25 g protein per pack, organic milk and farmer traceability.',
             showRewardBox: true,
-            rewardTitle: '🏢 Community Threshold Model:',
+            rewardTitle: 'Community Threshold Model:',
             rewardText: 'Delivery agents already serve your building. When 28 participating neighbours pre-commit 3 packs each, the 84-pack store threshold is fully met for direct chilled delivery.',
-            footnote: 'Neighbourhood pre-commitments guarantee zero delivery waste and fresh morning doorstep drop-offs.'
+            footnote: 'Neighbours say yes first. Then stock ships.'
           }
         },
         office: {
@@ -2969,19 +3163,19 @@
             title: 'Workplace Tasting & Pantry Concept',
             talkingPoints: 'Staff talking points: 25 g protein per pack, organic milk and farmer traceability.',
             showRewardBox: true,
-            rewardTitle: '💼 Workplace Discovery & Team Pre-Commit:',
+            rewardTitle: 'Workplace Discovery & Team Pre-Commit:',
             rewardText: 'Colleagues discover HP Milk through workplace tastings and use the Monday protein link to pre-commit together for scheduled weekly drops.',
-            footnote: 'Aggregated coworker demand unlocks direct pantry deliveries with zero office refrigeration waste.'
+            footnote: 'Neighbours say yes first. Then stock ships.'
           }
         },
         dietitian: {
-          heading: 'Help your clients discover organic high-protein milk.',
-          subclaim: 'One-page educational product information guide.',
+          heading: 'A one-page guide: what 25 g of protein looks like in a day.',
+          subclaim: 'Trial packs for your patients. No per-sale reward.',
           features: [
-            'One-page product information guide for patient counseling',
-            'Complimentary trial packs and product information',
+            'A one-page guide: what 25 g of protein looks like in a day',
+            'Trial packs for your patients',
             'Factual nutrition: 25 g protein per pack, organic and farmer-traceable',
-            'Evidence-based education: no medical claims, no health outcome promises, no per-sale rewards'
+            'Anchors earn product, never cash. Dietitians earn no per-sale reward.'
           ],
           showRating: false,
           showRewardPanel: false,
@@ -2996,25 +3190,23 @@
             title: 'Dietitian Product Education Guide',
             talkingPoints: 'Staff talking points: 25 g protein per pack, organic milk and farmer traceability.',
             showRewardBox: true,
-            rewardTitle: '🩺 Educational Support & Trial Packs:',
-            rewardText: 'Help clients discover organic high-protein milk with one-page product information guides and trial packs. Strictly educational with no medical claims or per-sale rewards.',
+            rewardTitle: 'Educational Support & Trial Packs:',
+            rewardText: 'A one-page guide: what 25 g of protein looks like in a day. Trial packs for your patients. No per-sale reward. Strictly educational with no drug names or medical claims.',
             footnote: 'Factual dietary information for balanced daily protein intake from traceable organic dairy.'
           }
         }
       };
 
       function renderAnchorExperience(expKey) {
-        state.selectedAnchor = expKey;
+        DATA.selectedAnchor = expKey;
         const data = ANCHOR_EXPERIENCES[expKey];
 
-        // Update tabs active state
         [DOM.tabGym, DOM.tabApartment, DOM.tabOffice, DOM.tabDietitian].forEach(tab => {
           const isMatch = tab.dataset.exp === expKey;
           tab.classList.toggle('active', isMatch);
           tab.setAttribute('aria-selected', isMatch);
         });
 
-        // Content update
         DOM.expHeading.textContent = data.heading;
         DOM.expSubclaim.textContent = data.subclaim;
 
@@ -3025,10 +3217,8 @@
           DOM.expFeatureList.appendChild(li);
         });
 
-        // Taste Rating (only in gym)
         DOM.tasteRatingSection.style.display = data.showRating ? 'flex' : 'none';
 
-        // Reward panel (only in gym)
         if (data.showRewardPanel) {
           DOM.expRewardPanel.style.display = 'block';
           DOM.rewardPanelBadge.textContent = data.rewardBadge;
@@ -3044,7 +3234,6 @@
           DOM.expRewardPanel.style.display = 'none';
         }
 
-        // Physical Tent-Card update
         if (data.tent) {
           DOM.tentFrontBadge.textContent = data.tent.frontBadge;
           DOM.tentFrontHeadline.innerHTML = data.tent.headline;
@@ -3063,22 +3252,20 @@
         }
       }
 
-      // Tab switch events
       [DOM.tabGym, DOM.tabApartment, DOM.tabOffice, DOM.tabDietitian].forEach(tab => {
         tab.addEventListener('click', () => {
           renderAnchorExperience(tab.dataset.exp);
         });
       });
 
-      // Interactive Star Rating
       function updateStarRating(rating) {
-        state.tasteRating = rating;
+        DATA.tasteRating = rating;
         const stars = DOM.starRatingGroup.querySelectorAll('.star-btn');
         stars.forEach(s => {
           const v = parseInt(s.dataset.val, 10);
           s.classList.toggle('rated', v <= rating);
         });
-        DOM.starRatingFeedback.textContent = `(${rating}/5 rated)`;
+        DOM.starRatingFeedback.textContent = rating > 0 ? `(${rating}/5 rated)` : 'Tap to rate';
       }
 
       DOM.starRatingGroup.addEventListener('click', (e) => {
@@ -3089,7 +3276,6 @@
         }
       });
 
-      // Anchor Pre-commit Button navigates to #unlock
       DOM.btnAnchorPrecommit.addEventListener('click', () => {
         window.location.hash = '#unlock';
       });
@@ -3100,33 +3286,20 @@
       function renderLedgerTable() {
         DOM.ledgerTableBody.innerHTML = '';
 
-        state.catchments.forEach(c => {
+        DATA.catchments.forEach(c => {
+          const derived = deriveCatchmentInfo(c);
           const tr = document.createElement('tr');
-          tr.className = `catchment-row ${c.id === state.selectedCatchmentId ? 'selected' : ''}`;
-          tr.dataset.id = c.id;
+          tr.setAttribute('data-id', c.id);
+          tr.className = c.id === DATA.selectedCatchmentId ? 'active-row' : '';
 
-          // Status calculation
-          let statusClass = 'amber';
-          let statusText = 'Proving Path';
-
-          if (c.isPaused) {
-            statusClass = 'red';
-            statusText = 'Paused (Store)';
-          } else if (c.status === 'green') {
-            statusClass = 'green';
-            statusText = 'On Track';
-          } else if (c.status === 'red') {
-            statusClass = 'red';
-            statusText = '>25% Wastage';
-          }
-
-          let progressCell = `${c.stage}`;
+          let progressCell = `${derived.stage} · ${c.packs}/${CONSTANTS.THRESHOLD}`;
           if (c.conversion !== null) {
             progressCell += ` · ${c.conversion}% conv`;
           }
-          if (c.target) {
-            progressCell += ` · ${c.packs}/${c.target}`;
-          }
+
+          let statusClass = 'amber';
+          if (derived.status === 'green') statusClass = 'green';
+          else if (derived.status === 'red') statusClass = 'red';
 
           tr.innerHTML = `
             <td><strong>${c.name}</strong></td>
@@ -3134,13 +3307,13 @@
             <td>${progressCell}</td>
             <td>
               <span class="status-badge ${statusClass}">
-                <span class="dot"></span> ${statusText}
+                <span class="dot"></span> ${derived.statusText}
               </span>
             </td>
           `;
 
           tr.addEventListener('click', () => {
-            state.selectedCatchmentId = c.id;
+            DATA.selectedCatchmentId = c.id;
             renderLedgerTable();
             renderInspectorPanel();
           });
@@ -3150,141 +3323,171 @@
       }
 
       function renderInspectorPanel() {
-        const catchment = state.catchments.find(c => c.id === state.selectedCatchmentId) || state.catchments[0];
+        const catchment = DATA.catchments.find(c => c.id === DATA.selectedCatchmentId) || DATA.catchments[0];
+        const derived = deriveCatchmentInfo(catchment);
+
         DOM.inspectorCatchmentName.textContent = `${catchment.name}, ${catchment.city}`;
-
-        let desc = catchment.stage;
-        if (catchment.isPaused) {
-          desc = 'Paused. Store, not product.';
-        } else if (catchment.isReleasedQC) {
-          desc = 'Live on Quick-Commerce · Daily replenishment';
+        DOM.inspectorStageNote.textContent = `${derived.stage} — ${derived.detailNote}`;
+        if (DOM.lastActionNotice) {
+          DOM.lastActionNotice.textContent = `Last action: ${DATA.lastAction}`;
         }
-        DOM.inspectorStageNote.textContent = desc;
 
-        // Render Wastage Line Chart
+        // Render Wastage Line Chart or "Not live yet"
         renderWastageChart(catchment);
 
-        // Evaluate Governance Controls:
-        // 1. Release to quick-commerce
-        // Rule: Packs >= 84, conversion >= 70%, 4 app weeks completed
-        const meetsRelease = (catchment.packs >= 84) &&
-          (catchment.conversion !== null && catchment.conversion >= 70) &&
-          (catchment.appWeeks >= 4) &&
-          !catchment.isReleasedQC &&
-          !catchment.isPaused;
+        // Action 1: Release to Quick-Commerce (Ring A)
+        // Relevant for rows that are NOT live on QC yet
+        const canRelease = (catchment.packs >= CONSTANTS.THRESHOLD) && 
+                           (catchment.conversion !== null && catchment.conversion >= CONSTANTS.CONVERSION_BAR) && 
+                           (catchment.appWeeks >= 4) && 
+                           !catchment.isReleasedQC && 
+                           !catchment.isPaused;
 
-        DOM.btnReleaseQC.disabled = !meetsRelease;
-        if (catchment.isReleasedQC) {
-          DOM.btnReleaseQC.textContent = '✓ Live on Quick-Commerce';
-          DOM.qcDisabledReason.style.display = 'none';
-        } else {
-          DOM.btnReleaseQC.textContent = '🚀 Release to Quick-Commerce (Ring A)';
-          DOM.qcDisabledReason.style.display = meetsRelease ? 'none' : 'block';
-        }
-
-        // 2. Pause store
-        // Available when wastage is above 25%
-        const lastWastage = catchment.wastageHistory.length > 0 ? catchment.wastageHistory[catchment.wastageHistory.length - 1] : 0;
-        const canPause = lastWastage > 25 && !catchment.isPaused;
-
-        DOM.btnPauseStore.disabled = !canPause;
-        if (catchment.isPaused) {
-          DOM.btnPauseStore.textContent = 'Store Paused (Store, not product)';
-        } else {
-          DOM.btnPauseStore.textContent = '⏸️ Pause Store (Store, not product)';
-        }
-
-        // 3. Open next ring
-        // Rule: Enabled only after wastage remains at or below 12% for two consecutive weeks.
-        let consecutiveQualifying = 0;
-        for (let i = catchment.wastageHistory.length - 1; i >= 0; i--) {
-          if (catchment.wastageHistory[i] <= 12) {
-            consecutiveQualifying++;
+        if (!catchment.isReleasedQC && !catchment.isPaused) {
+          DOM.btnReleaseQC.style.display = 'flex';
+          DOM.btnReleaseQC.disabled = !canRelease;
+          DOM.btnReleaseQC.innerHTML = `<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> <span>Release to Quick-Commerce (Ring A)</span>`;
+          
+          if (!canRelease) {
+            DOM.qcDisabledReason.style.display = 'block';
+            let reasons = [];
+            if (catchment.packs < CONSTANTS.THRESHOLD) reasons.push(`precommits ${catchment.packs}/${CONSTANTS.THRESHOLD}`);
+            if (catchment.conversion === null || catchment.conversion < CONSTANTS.CONVERSION_BAR) reasons.push(`conversion ${catchment.conversion || 0}% < 70%`);
+            if (catchment.appWeeks < 4) reasons.push(`${catchment.appWeeks}/4 app weeks`);
+            DOM.qcDisabledReason.textContent = `Requires: ${reasons.join(', ')}.`;
           } else {
-            break;
+            DOM.qcDisabledReason.style.display = 'none';
           }
+        } else {
+          DOM.btnReleaseQC.style.display = 'none';
+          DOM.qcDisabledReason.style.display = 'none';
         }
 
-        const canOpenRing = consecutiveQualifying >= 2;
-        DOM.btnOpenNextRing.disabled = !canOpenRing;
-        DOM.btnOpenNextRing.textContent = `🔓 Open Next Ring (${consecutiveQualifying} of 2 weeks held)`;
-        DOM.ringDisabledReason.style.display = canOpenRing ? 'none' : 'block';
+        // Action 2: Pause store
+        // Relevant when store is live on QC or already paused
+        if (catchment.isReleasedQC || catchment.isPaused) {
+          DOM.btnPauseStore.style.display = 'flex';
+          const lastW = catchment.wastageHistory.length > 0 ? catchment.wastageHistory[catchment.wastageHistory.length - 1] : 0;
+          const canPause = lastW > CONSTANTS.PAUSE_LINE_PCT && !catchment.isPaused;
+          DOM.btnPauseStore.disabled = !canPause;
+
+          if (catchment.isPaused) {
+            DOM.btnPauseStore.innerHTML = '<span>Paused. Store, not product.</span>';
+          } else {
+            DOM.btnPauseStore.innerHTML = `<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> <span>Pause store (Store, not product)</span>`;
+          }
+        } else {
+          DOM.btnPauseStore.style.display = 'none';
+        }
+
+        // Action 3: Open Next Ring & Advance 1 Week
+        // Only for quick-commerce rows
+        if (catchment.isReleasedQC && !catchment.isPaused) {
+          DOM.btnOpenNextRing.style.display = 'flex';
+          DOM.btnAdvanceWeek.style.display = 'flex';
+
+          const consec = getConsecutiveQualifyingWeeks(catchment);
+          const canOpenRing = consec >= 2 && !DATA.ringBExpanded;
+
+          DOM.btnOpenNextRing.disabled = !canOpenRing;
+          if (DATA.ringBExpanded) {
+            DOM.btnOpenNextRing.innerHTML = '<span>Ring B already opened (~350 stores)</span>';
+            DOM.ringDisabledReason.style.display = 'none';
+          } else {
+            DOM.btnOpenNextRing.innerHTML = `<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> <span>Open next ring (${consec} of 2 weeks held)</span>`;
+            if (canOpenRing) {
+              DOM.ringDisabledReason.style.display = 'none';
+            } else {
+              DOM.ringDisabledReason.style.display = 'block';
+              DOM.ringDisabledReason.textContent = `Enabled only after 2 consecutive weeks ≤12% (currently ${consec} of 2 held).`;
+            }
+          }
+        } else {
+          DOM.btnOpenNextRing.style.display = 'none';
+          DOM.ringDisabledReason.style.display = 'none';
+          DOM.btnAdvanceWeek.style.display = 'none';
+        }
       }
 
       function renderWastageChart(catchment) {
         const svg = DOM.wastageChartSvg;
-        const history = catchment.wastageHistory;
-        const latest = history.length > 0 ? history[history.length - 1] : null;
+        const history = catchment.wastageHistory || [];
 
-        DOM.latestWastageLabel.textContent = latest !== null ? `Latest: ${latest}%` : 'Pre-launch';
-
-        // Base SVG coordinate space: 320 x 160
-        // Wastage scale: 0% at y=140, 30% at y=20
-        const scaleY = (pct) => 140 - ((pct / 30) * 120);
-        const weeks = [1, 2, 3, 4, 5, 6];
-        const stepX = 320 / 7;
-
-        // Path definitions
-        // Target Path: 20% in W1..W5, then drops to 12% in W6
-        const targetPathD = `
-          M ${stepX} ${scaleY(20)}
-          L ${stepX * 2} ${scaleY(20)}
-          L ${stepX * 3} ${scaleY(20)}
-          L ${stepX * 4} ${scaleY(20)}
-          L ${stepX * 5} ${scaleY(20)}
-          L ${stepX * 6} ${scaleY(12)}
-        `;
-
-        // Pause Threshold (25% dashed line)
-        const pauseY = scaleY(25);
-
-        // Actual Wastage Path
-        let actualPathD = '';
-        if (history.length > 0) {
-          actualPathD = history.map((val, idx) => {
-            const x = stepX * (idx + 1);
-            const y = scaleY(val);
-            return `${idx === 0 ? 'M' : 'L'} ${x} ${y}`;
-          }).join(' ');
+        // If not live on QC: show "Not live yet"
+        if (!catchment.isReleasedQC || history.length === 0) {
+          DOM.latestWastageLabel.textContent = 'Not live yet';
+          svg.innerHTML = `
+            <rect width="320" height="160" fill="#FBF8F2" rx="4" />
+            <text x="160" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#7D7465">
+              Not live yet — Pre-commit / Proving Phase
+            </text>
+          `;
+          return;
         }
 
-        // SVG markup
+        const latest = history[history.length - 1];
+        DOM.latestWastageLabel.textContent = `Latest: ${latest}%`;
+
+        const totalWeeks = Math.max(6, history.length);
+        const scaleY = (pct) => 140 - ((pct / 30) * 120);
+        const stepX = 320 / (totalWeeks + 1);
+
+        // Target path
+        let targetPathD = '';
+        for (let w = 1; w <= totalWeeks; w++) {
+          const targetPct = CONSTANTS.TARGET_PATH[Math.min(w - 1, CONSTANTS.TARGET_PATH.length - 1)];
+          const x = stepX * w;
+          const y = scaleY(targetPct);
+          targetPathD += `${w === 1 ? 'M' : 'L'} ${x} ${y} `;
+        }
+
+        const pauseY = scaleY(CONSTANTS.PAUSE_LINE_PCT);
+
+        let actualPathD = history.map((val, idx) => {
+          const x = stepX * (idx + 1);
+          const y = scaleY(val);
+          return `${idx === 0 ? 'M' : 'L'} ${x} ${y}`;
+        }).join(' ');
+
         svg.innerHTML = `
-          <!-- Baseline and grids -->
+          <!-- Baseline and target lines -->
           <line x1="0" y1="140" x2="320" y2="140" stroke="#E2D9CC" stroke-width="1" />
           <line x1="0" y1="${scaleY(12)}" x2="320" y2="${scaleY(12)}" stroke="#E7F3EB" stroke-width="1" />
           
           <!-- Dashed 25% pause threshold -->
           <line x1="0" y1="${pauseY}" x2="320" y2="${pauseY}" stroke="#C2552D" stroke-width="1.5" stroke-dasharray="4,4" />
-          <text x="315" y="${pauseY - 4}" text-anchor="end" fill="#C2552D" font-size="9" font-weight="600">25% Pause</text>
+          <text x="315" y="${pauseY - 4}" text-anchor="end" fill="#C2552D" font-size="9" font-weight="600">25% Pause Line</text>
 
           <!-- Target Wastage Line (Green) -->
           <path d="${targetPathD}" fill="none" stroke="#2E7D4F" stroke-width="2" stroke-linecap="round" />
 
           <!-- Actual Wastage Line (Forest Green) -->
-          ${actualPathD ? `<path d="${actualPathD}" fill="none" stroke="#123524" stroke-width="3" stroke-linecap="round" />` : ''}
+          <path d="${actualPathD}" fill="none" stroke="#123524" stroke-width="3" stroke-linecap="round" />
 
           <!-- Actual Data Points -->
           ${history.map((val, idx) => {
-          const x = stepX * (idx + 1);
-          const y = scaleY(val);
-          return `
+            const x = stepX * (idx + 1);
+            const y = scaleY(val);
+            return `
               <circle cx="${x}" cy="${y}" r="4" fill="#FFFFFF" stroke="#123524" stroke-width="2" />
               <text x="${x}" y="${y - 8}" text-anchor="middle" font-size="9" font-weight="700" fill="#123524">${val}%</text>
             `;
-        }).join('')}
+          }).join('')}
 
           <!-- Week Labels -->
-          ${weeks.map(w => `<text x="${stepX * w}" y="155" text-anchor="middle" font-size="9" fill="#7D7465">W${w}</text>`).join('')}
+          ${Array.from({ length: totalWeeks }, (_, i) => i + 1).map(w => `<text x="${stepX * w}" y="155" text-anchor="middle" font-size="9" fill="#7D7465">W${w}</text>`).join('')}
         `;
       }
 
       // Action Handlers
       DOM.btnReleaseQC.addEventListener('click', () => {
-        const c = state.catchments.find(item => item.id === state.selectedCatchmentId);
-        if (c) {
+        const c = DATA.catchments.find(item => item.id === DATA.selectedCatchmentId);
+        if (c && c.packs >= CONSTANTS.THRESHOLD && c.conversion >= CONSTANTS.CONVERSION_BAR && c.appWeeks >= 4) {
           c.isReleasedQC = true;
-          c.stage = 'Released to Quick-Commerce (Ring A)';
+          c.type = 'qc';
+          c.wastageHistory = [18]; // First week on QC
+          DATA.lastAction = `Released ${c.name} to Quick-Commerce (Ring A)`;
+          alert('Released to Ring A. Wastage tracking starts.');
           renderLedgerTable();
           renderInspectorPanel();
           updateGateFunnel();
@@ -3292,11 +3495,11 @@
       });
 
       DOM.btnPauseStore.addEventListener('click', () => {
-        const c = state.catchments.find(item => item.id === state.selectedCatchmentId);
+        const c = DATA.catchments.find(item => item.id === DATA.selectedCatchmentId);
         if (c) {
           c.isPaused = true;
-          c.status = 'red';
-          c.stage = 'Paused. Store, not product.';
+          DATA.lastAction = `Paused store ${c.name}`;
+          alert('The product stays listed. This store returns to app-only.');
           renderLedgerTable();
           renderInspectorPanel();
           updateGateFunnel();
@@ -3304,31 +3507,43 @@
       });
 
       DOM.btnOpenNextRing.addEventListener('click', () => {
-        alert('🎉 Expansion Unlocked! Banjara Hills has held ≤12% wastage for 2 consecutive weeks. Opening Ring B (~350 stores).');
-        updateGateFunnel(true);
+        const c = DATA.catchments.find(item => item.id === DATA.selectedCatchmentId);
+        const consec = getConsecutiveQualifyingWeeks(c);
+        if (consec >= 2) {
+          DATA.ringBExpanded = true;
+          DATA.lastAction = `Opened Ring B (~350 stores) after ${c.name} held ≤12%`;
+          alert('Ring B opens (next band of stores).');
+          renderLedgerTable();
+          renderInspectorPanel();
+          updateGateFunnel();
+        }
+      });
+
+      // Advance 1 week button
+      DOM.btnAdvanceWeek.addEventListener('click', () => {
+        const c = DATA.catchments.find(item => item.id === DATA.selectedCatchmentId);
+        if (c && c.isReleasedQC) {
+          c.wastageHistory.push(10); // week 7 at 10%
+          DATA.lastAction = `Advanced ${c.name} to Week ${c.wastageHistory.length} (wastage 10%)`;
+          renderLedgerTable();
+          renderInspectorPanel();
+          updateGateFunnel();
+        }
       });
 
       // Date Presets
       function setDatePreset(day) {
-        state.ledgerDatePreset = day;
+        DATA.ledgerDatePreset = day;
         [DOM.presetDay14, DOM.presetDay45, DOM.presetDay90].forEach(b => {
           const isSelected = parseInt(b.dataset.day, 10) === day;
           b.classList.toggle('active', isSelected);
         });
 
-        if (day === 14) {
-          state.anchorsLive = 25;
-          DOM.kpiAnchorsLive.textContent = '~25';
-          DOM.kpiAnchorsNote.textContent = 'Day 14 baseline snapshot';
-        } else if (day === 45) {
-          state.anchorsLive = 150;
-          DOM.kpiAnchorsLive.textContent = '~150';
-          DOM.kpiAnchorsNote.textContent = 'Day 45 Ring A coverage';
-        } else if (day === 90) {
-          state.anchorsLive = 400;
-          DOM.kpiAnchorsLive.textContent = '~400';
-          DOM.kpiAnchorsNote.textContent = 'Day 90 expansion across Ring B';
-        }
+        const info = CONSTANTS.ANCHORS_BY_DAY[day];
+        DOM.kpiAnchorsLive.textContent = info.label;
+        DOM.kpiAnchorsNote.textContent = info.note;
+        DATA.lastAction = `Selected ${info.note}`;
+        if (DOM.lastActionNotice) DOM.lastActionNotice.textContent = `Last action: ${DATA.lastAction}`;
       }
 
       DOM.presetDay14.addEventListener('click', () => setDatePreset(14));
@@ -3336,56 +3551,72 @@
       DOM.presetDay90.addEventListener('click', () => setDatePreset(90));
 
       // Gate Funnel Update
-      function updateGateFunnel(ringOpened = false) {
-        DOM.funnelCatchments.textContent = state.catchments.length;
-        DOM.funnelPacksTarget.textContent = state.catchments.filter(c => c.packs >= 84).length;
-        DOM.funnelProvedConversion.textContent = state.catchments.filter(c => c.conversion !== null && c.conversion >= 70).length;
-        DOM.funnelLiveQC.textContent = state.catchments.filter(c => c.isReleasedQC).length;
-        DOM.funnelNextRing.textContent = ringOpened ? '1 (Ring B)' : '0 (Pending)';
+      function updateGateFunnel() {
+        const funnel = deriveFunnel();
+        DOM.funnelCatchments.textContent = funnel.total;
+        DOM.funnelPacksTarget.textContent = funnel.reached84;
+        DOM.funnelProvedConversion.textContent = funnel.provedConversion;
+        DOM.funnelLiveQC.textContent = funnel.liveQC;
+        DOM.funnelNextRing.textContent = funnel.nextRing === 1 ? '1 (Ring B)' : '0 (Pending)';
       }
 
-      // Advanced Feature: Who Pays Liability Slider
+      // Who Pays Liability Slider
       DOM.weekRangeSlider.addEventListener('input', (e) => {
         const wk = parseInt(e.target.value, 10);
-        state.liabilityWeek = wk;
+        DATA.liabilityWeek = wk;
         DOM.weekSliderLabel.textContent = `Week ${wk}`;
 
         let output = '';
         if (wk <= 4) {
-          output = 'Weeks 1–4: We pay 100% of launch buffer';
+          output = 'Weeks 1–4: we pay 100% of wasted packs';
         } else if (wk <= 8) {
-          output = 'Weeks 5–8: 50 / 50 shared platform risk';
+          output = 'Weeks 5–8: 50 / 50';
         } else {
-          output = 'Week 9 onwards: Platform carries ≤12% steady buffer';
+          output = 'Weeks 9+: the platform carries ≤12%';
         }
         DOM.payerStatusOutput.textContent = output;
       });
 
-      // Advanced Feature: Day-90 Run-rate Decision
-      function setRunRateVol(vol) {
-        state.runRateVol = vol;
-        [DOM.btnRateHigh, DOM.btnRateMid, DOM.btnRateLow].forEach(b => {
-          b.classList.toggle('active', parseInt(b.dataset.rate, 10) === vol);
-        });
+      // Day-90 Run-rate Slider and Decision
+      function updateExitRunRate(vol) {
+        DATA.exitRunRate = vol;
+        if (DOM.runRateSlider) DOM.runRateSlider.value = vol.toFixed(1);
+        if (DOM.runRateSliderLabel) DOM.runRateSliderLabel.textContent = `${vol.toFixed(1)}k L/day`;
 
-        if (vol >= 6300) {
-          DOM.decisionPill.textContent = 'Strategy: Stay on stretch (Scale Ring B + C)';
+        // Update active preset button if match
+        [DOM.btnRateHigh, DOM.btnRateMid, DOM.btnRateLow].forEach(b => {
+          b.classList.remove('active');
+        });
+        if (vol >= 6.3) DOM.btnRateHigh.classList.add('active');
+        else if (vol >= 4.8) DOM.btnRateMid.classList.add('active');
+        else DOM.btnRateLow.classList.add('active');
+
+        // Outputs as strictly specified:
+        if (vol >= 6.3) {
+          DOM.decisionPill.textContent = 'Stay on stretch: Ring B opens end-Jan, Ring C by mid-Mar';
           DOM.decisionPill.style.background = 'var(--green-light)';
           DOM.decisionPill.style.color = 'var(--forest-green)';
-        } else if (vol >= 4800) {
-          DOM.decisionPill.textContent = 'Strategy: Switch to floor (Stabilize Ring A + B)';
+        } else if (vol >= 4.8) {
+          DOM.decisionPill.textContent = 'Switch to floor: June is safe';
           DOM.decisionPill.style.background = 'var(--marigold-subtle)';
           DOM.decisionPill.style.color = '#925C05';
         } else {
-          DOM.decisionPill.textContent = 'Strategy: Recover (Audit pincode conversion)';
+          DOM.decisionPill.textContent = 'Recover: freeze new flavours and Ring C; put everything into habit and anchors in the existing three cities';
           DOM.decisionPill.style.background = 'var(--terracotta-subtle)';
           DOM.decisionPill.style.color = 'var(--terracotta)';
         }
       }
 
-      DOM.btnRateHigh.addEventListener('click', () => setRunRateVol(7200));
-      DOM.btnRateMid.addEventListener('click', () => setRunRateVol(5500));
-      DOM.btnRateLow.addEventListener('click', () => setRunRateVol(3900));
+      if (DOM.runRateSlider) {
+        DOM.runRateSlider.addEventListener('input', (e) => {
+          const vol = parseFloat(e.target.value);
+          updateExitRunRate(vol);
+        });
+      }
+
+      DOM.btnRateHigh.addEventListener('click', () => updateExitRunRate(7.2));
+      DOM.btnRateMid.addEventListener('click', () => updateExitRunRate(5.5));
+      DOM.btnRateLow.addEventListener('click', () => updateExitRunRate(3.9));
 
       /* -------------------------------------------------------------
          DEMO CONTROLS DRAWER
@@ -3400,49 +3631,64 @@
         if (e.target === DOM.demoDrawerOverlay) closeDemoDrawer();
       });
 
-      // 1. Add 5 neighbours
+      // 1. Add 5 neighbours: +5 neighbours, +15 packs
       DOM.btnDemoAdd5.addEventListener('click', () => {
-        state.neighbours += 5;
-        state.packs += 15;
-        state.shortOverride = false;
+        const k = DATA.catchments.find(c => c.id === 1);
+        k.neighbours += 5;
+        k.packs += 15;
+        DATA.shortOverride = false;
+        DATA.lastAction = 'Demo: Add 5 neighbours (+15 packs to Koramangala)';
         renderUnlockScreen();
         renderLedgerTable();
+        renderInspectorPanel();
         updateGateFunnel();
         closeDemoDrawer();
       });
 
-      // 2. Fast-forward to unlocked
+      // 2. Fast-forward to unlocked: packs 84, neighbours 28
       DOM.btnDemoUnlock.addEventListener('click', () => {
-        state.packs = 84;
-        state.unlockedOverride = true;
-        state.shortOverride = false;
+        const k = DATA.catchments.find(c => c.id === 1);
+        k.packs = 84;
+        k.neighbours = 28;
+        DATA.unlockedOverride = true;
+        DATA.shortOverride = false;
+        DATA.lastAction = 'Demo: Fast-forward Koramangala to unlocked (84 packs)';
         renderUnlockScreen();
         renderLedgerTable();
+        renderInspectorPanel();
         updateGateFunnel();
         closeDemoDrawer();
       });
 
-      // 3. 14 days later, still short
+      // 3. 14 days later, still short: packs 70, neighbours 23, state not-filled
+      // (if packs >= 84 set them to 70 first)
       DOM.btnDemoShort.addEventListener('click', () => {
-        state.packs = 70;
-        state.unlockedOverride = false;
-        state.shortOverride = true;
+        const k = DATA.catchments.find(c => c.id === 1);
+        k.packs = 70;
+        k.neighbours = 23;
+        DATA.unlockedOverride = false;
+        DATA.shortOverride = true;
+        DATA.lastAction = 'Demo: 14 days later, still short (70 packs in Koramangala)';
         renderUnlockScreen();
         renderLedgerTable();
+        renderInspectorPanel();
+        updateGateFunnel();
         closeDemoDrawer();
       });
 
-      // 4. Reset
+      // 4. Reset: 62 / 21 and all ledger data back to defaults
       DOM.btnDemoReset.addEventListener('click', () => {
-        state = JSON.parse(JSON.stringify(INITIAL_STATE));
+        DATA = JSON.parse(JSON.stringify(INITIAL_DATA));
         DOM.consentCheckbox.checked = false;
+        updateStarRating(0);
+        updateExitRunRate(6.3);
+        DATA.lastAction = 'Reset prototype to initial state';
         renderUnlockScreen();
         renderAnchorExperience('gym');
         renderLedgerTable();
         renderInspectorPanel();
         updateGateFunnel();
         setDatePreset(14);
-        setRunRateVol(7200);
         closeDemoDrawer();
       });
 
@@ -3451,27 +3697,27 @@
          ------------------------------------------------------------- */
       const TOUR_STEPS = [
         {
-          badge: 'Slide Reference: Slide 1',
+          badge: 'Slide Reference: Slide 4',
           title: '1. Neighbours pre-commit',
-          body: 'Instead of dumping cartons onto speculative grocery shelves, local consumers discover HP Milk via gym or building QR codes and pre-commit without paying upfront.'
+          body: 'Instead of shipping stock and hoping, neighbours pre-commit through a gym or building QR, with no payment.'
         },
         {
-          badge: 'Slide Reference: Slide 2',
+          badge: 'Slide Reference: Slide 4',
           title: '2. Ledger fills',
           body: 'The Pincode Demand Ledger tracks aggregate pack volume. Each store catchment requires 84 packs (60% of opening week) to cross the commercial feasibility threshold.'
         },
         {
-          badge: 'Slide Reference: Slide 3',
+          badge: 'Slide Reference: Slide 5',
           title: '3. Gate opens',
           body: 'When 84 packs are reached, Gate 1 opens. Stock is ordered with guaranteed day-one sell-through, eliminating retail waste.'
         },
         {
-          badge: 'Slide Reference: Slide 4',
+          badge: 'Slide Reference: Slide 4 and 5',
           title: '4. Stock lands pre-sold',
           body: 'Packs arrive directly into chilled distribution. Proving conversion on the app (≥70% over 4 weeks) establishes true repeat velocity before quick-commerce shelf placement.'
         },
         {
-          badge: 'Slide Reference: Slide 5',
+          badge: 'Slide Reference: Slide 8',
           title: '5. Proof earns the shelf',
           body: 'Stores maintain ≤12% wastage for 2 consecutive weeks to unlock Ring B expansion (~350 stores). Demand earns the shelf, protecting unit economics.'
         }
@@ -3488,14 +3734,13 @@
         DOM.tourBody.textContent = step.body;
         DOM.tourStepIndicator.textContent = `Step ${stepIdx + 1} of ${TOUR_STEPS.length}`;
 
-        // Dots
         const dots = DOM.tourProgressDots.querySelectorAll('.tour-progress-dot');
         dots.forEach((dot, idx) => {
           dot.classList.toggle('active', idx <= stepIdx);
         });
 
         DOM.tourPrevBtn.disabled = stepIdx === 0;
-        DOM.tourNextBtn.textContent = stepIdx === TOUR_STEPS.length - 1 ? 'Finish Tour 🚀' : 'Next Step →';
+        DOM.tourNextBtn.textContent = stepIdx === TOUR_STEPS.length - 1 ? 'Finish Tour' : 'Next Step →';
       }
 
       DOM.openTourBtn.addEventListener('click', () => {
@@ -3532,7 +3777,7 @@
         renderInspectorPanel();
         updateGateFunnel();
         setDatePreset(14);
-        setRunRateVol(7200);
+        updateExitRunRate(6.3);
       }
 
       initApp();
