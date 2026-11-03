@@ -1948,6 +1948,10 @@
       </nav>
 
       <div class="header-actions">
+        <button class="btn btn-primary" id="btnJudgeWalkthrough" aria-label="Open Judge walkthrough" style="min-height: 40px; padding: 0.45rem 1.1rem; font-size: 0.85rem;">
+          <svg class="ui-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Judge walkthrough</span>
+        </button>
         <button class="btn-tour-trigger" id="openTourBtn" aria-label="Open 30-second guided tour">
           <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#123524" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> <span>30s Tour</span>
         </button>
@@ -3062,6 +3066,21 @@
         screenAnchor: document.getElementById('screen-anchor'),
         screenLedger: document.getElementById('screen-ledger'),
 
+        // Judge Walkthrough & Recording
+        btnJudgeWalkthrough: document.getElementById('btnJudgeWalkthrough'),
+        judgeWalkthroughCard: document.getElementById('judgeWalkthroughCard'),
+        walkthroughStepTag: document.getElementById('walkthroughStepTag'),
+        walkthroughTitle: document.getElementById('walkthroughTitle'),
+        walkthroughQuote: document.getElementById('walkthroughQuote'),
+        walkthroughDetail: document.getElementById('walkthroughDetail'),
+        walkthroughPrevBtn: document.getElementById('walkthroughPrevBtn'),
+        walkthroughNextBtn: document.getElementById('walkthroughNextBtn'),
+        closeWalkthroughBtn: document.getElementById('closeWalkthroughBtn'),
+        recordingControlBar: document.getElementById('recordingControlBar'),
+        recordingModeLabel: document.getElementById('recordingModeLabel'),
+        btnPlayDemo: document.getElementById('btnPlayDemo'),
+        playDemoBtnText: document.getElementById('playDemoBtnText'),
+
         // Screen 1: Unlock
         ringCircle: document.getElementById('progressRingCircle'),
         ringPacksCount: document.getElementById('ringPacksCount'),
@@ -3175,10 +3194,14 @@
          ROUTING SYSTEM
          ------------------------------------------------------------- */
       function handleRouting() {
-        const hash = window.location.hash.toLowerCase();
+        const fullHash = window.location.hash || '#unlock';
+        // Parse route and optional parameters: e.g. #anchor?type=office
+        const [hashRoute, queryStr] = fullHash.split('?');
+        const cleanRoute = hashRoute.toLowerCase();
+
         let targetRoute = 'unlock';
-        if (hash === '#anchor') targetRoute = 'anchor';
-        else if (hash === '#ledger') targetRoute = 'ledger';
+        if (cleanRoute === '#anchor') targetRoute = 'anchor';
+        else if (cleanRoute === '#ledger') targetRoute = 'ledger';
 
         DATA.route = targetRoute;
         DOM.screenUnlock.classList.toggle('active', targetRoute === 'unlock');
@@ -3188,6 +3211,19 @@
         DOM.navUnlock.classList.toggle('active', targetRoute === 'unlock');
         DOM.navAnchor.classList.toggle('active', targetRoute === 'anchor');
         DOM.navLedger.classList.toggle('active', targetRoute === 'ledger');
+
+        // Deep links for anchor types: #anchor?type=gym|apartment|office|dietitian
+        if (targetRoute === 'anchor') {
+          let anchorType = 'gym';
+          if (queryStr) {
+            const params = new URLSearchParams(queryStr);
+            const typeParam = params.get('type');
+            if (typeParam && ['gym', 'apartment', 'office', 'dietitian'].includes(typeParam.toLowerCase())) {
+              anchorType = typeParam.toLowerCase();
+            }
+          }
+          renderAnchorExperience(anchorType);
+        }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -4017,6 +4053,7 @@
         DOM.consentCheckbox.checked = false;
         updateStarRating(0);
         updateExitRunRate(6.3);
+        checkRecordingMode();
         DATA.lastAction = 'Reset prototype to initial state';
         renderUnlockScreen();
         renderAnchorExperience('gym');
@@ -4026,6 +4063,316 @@
         setDatePreset(14);
         closeDemoDrawer();
       });
+
+      
+      /* -------------------------------------------------------------
+         FEATURE 1: JUDGE WALKTHROUGH ENGINE
+         1. Open Screen 2 (anchor page): "A gym member scans this QR."
+         2. Open Screen 1 and commit 3 packs: "No payment, just a promise." Ring 62 → 65.
+         3. "Fast-forward to unlocked": "At 84 packs, stock lands pre-sold."
+         4. "14 days later, still short": "If it doesn't fill, nothing ships. Nothing is wasted."
+         5. Open Screen 3, select Jayanagar: "Above 25% for 7 days, we pause the store, not the product."
+         Each step performs the action automatically when "Next" is pressed and points to the element.
+         ------------------------------------------------------------- */
+      const JUDGE_STEPS = [
+        {
+          tag: 'Step 1 of 5',
+          title: 'Anchor Acquisition',
+          quote: 'A gym member scans this QR.',
+          detail: 'Footfall in local anchor communities (gyms, apartments, offices) converts directly into verified pre-commit interest.',
+          targetSelector: '#tentFrontWrap',
+          execute: () => {
+            window.location.hash = '#anchor?type=gym';
+            renderAnchorExperience('gym');
+          }
+        },
+        {
+          tag: 'Step 2 of 5',
+          title: 'Demand Pre-Commit',
+          quote: 'No payment, just a promise.',
+          detail: 'Member pledges 3 opening week packs. Notice the demand progress ring advance from 62 → 65 packs.',
+          targetSelector: '.phone-frame',
+          execute: () => {
+            window.location.hash = '#unlock';
+            // Reset to base 62 packs then commit 3
+            const k = DATA.catchments.find(c => c.id === 1);
+            k.packs = 62;
+            k.neighbours = 21;
+            DATA.userCommitted = false;
+            DATA.unlockedOverride = false;
+            DATA.shortOverride = false;
+            DATA.userPacksSelected = 3;
+            DOM.consentCheckbox.checked = true;
+
+            // Perform commit: 62 -> 65
+            DATA.userCommitted = true;
+            DATA.userCommittedPacks = 3;
+            k.packs += 3;
+            k.neighbours += 1;
+            DATA.lastAction = 'Walkthrough: Pledged 3 packs for Koramangala (62 → 65)';
+            renderUnlockScreen();
+            renderLedgerTable();
+            renderInspectorPanel();
+            updateGateFunnel();
+          }
+        },
+        {
+          tag: 'Step 3 of 5',
+          title: 'Threshold Reached & Gate Unlocked',
+          quote: 'At 84 packs, stock lands pre-sold.',
+          detail: 'When demand reaches 60% of the opening week order (84 packs), Gate 1 opens and stock is ordered with guaranteed day-one turnover.',
+          targetSelector: '#unlockStateBanner',
+          execute: () => {
+            window.location.hash = '#unlock';
+            const k = DATA.catchments.find(c => c.id === 1);
+            k.packs = 84;
+            k.neighbours = 28;
+            DATA.unlockedOverride = true;
+            DATA.shortOverride = false;
+            DATA.lastAction = 'Walkthrough: Threshold reached (84 packs pre-sold)';
+            renderUnlockScreen();
+            renderLedgerTable();
+            renderInspectorPanel();
+            updateGateFunnel();
+          }
+        },
+        {
+          tag: 'Step 4 of 5',
+          title: 'Zero Waste Feasibility Rule',
+          quote: "If it doesn't fill, nothing ships. Nothing is wasted.",
+          detail: 'If a catchment fails to cross the 84-pack hurdle after 14 days, the window closes cleanly without a single carton being produced or wasted.',
+          targetSelector: '#notFilledStateBanner',
+          execute: () => {
+            window.location.hash = '#unlock';
+            const k = DATA.catchments.find(c => c.id === 1);
+            k.packs = 70;
+            k.neighbours = 23;
+            DATA.unlockedOverride = false;
+            DATA.shortOverride = true;
+            DATA.lastAction = 'Walkthrough: 14 days later, still short (70 packs)';
+            renderUnlockScreen();
+            renderLedgerTable();
+            renderInspectorPanel();
+            updateGateFunnel();
+          }
+        },
+        {
+          tag: 'Step 5 of 5',
+          title: 'Demand Governance & Store Pausing',
+          quote: 'Above 25% for 7 days, we pause the store, not the product.',
+          detail: 'Jayanagar wastage breached 25%. We pause fulfillment to this specific dark store without delisting the SKU from the platform.',
+          targetSelector: '#wastageInspectorPanel',
+          execute: () => {
+            window.location.hash = '#ledger';
+            // Select Jayanagar (id: 6)
+            DATA.selectedCatchmentId = 6;
+            renderLedgerTable();
+            renderInspectorPanel();
+          }
+        }
+      ];
+
+      let judgeCurrentStep = 0;
+
+      function highlightTargetElement(selector) {
+        // Remove previous highlights
+        document.querySelectorAll('.walkthrough-target-highlight').forEach(el => {
+          el.classList.remove('walkthrough-target-highlight');
+        });
+
+        if (!selector) return;
+
+        setTimeout(() => {
+          const target = document.querySelector(selector);
+          if (target) {
+            target.classList.add('walkthrough-target-highlight');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 150);
+      }
+
+      function renderJudgeWalkthroughStep(idx) {
+        judgeCurrentStep = idx;
+        const step = JUDGE_STEPS[idx];
+
+        // Execute action automatically
+        step.execute();
+
+        // Update card content
+        DOM.walkthroughStepTag.textContent = step.tag;
+        DOM.walkthroughTitle.textContent = step.title;
+        DOM.walkthroughQuote.textContent = step.quote;
+        DOM.walkthroughDetail.textContent = step.detail;
+
+        DOM.walkthroughPrevBtn.disabled = idx === 0;
+        DOM.walkthroughNextBtn.textContent = idx === JUDGE_STEPS.length - 1 ? 'Finish Walkthrough' : 'Next Step →';
+
+        DOM.judgeWalkthroughCard.classList.add('active');
+
+        // Point to element
+        highlightTargetElement(step.targetSelector);
+      }
+
+      function closeJudgeWalkthrough() {
+        DOM.judgeWalkthroughCard.classList.remove('active');
+        document.querySelectorAll('.walkthrough-target-highlight').forEach(el => {
+          el.classList.remove('walkthrough-target-highlight');
+        });
+      }
+
+      DOM.btnJudgeWalkthrough.addEventListener('click', () => {
+        renderJudgeWalkthroughStep(0);
+      });
+
+      DOM.closeWalkthroughBtn.addEventListener('click', closeJudgeWalkthrough);
+
+      DOM.walkthroughPrevBtn.addEventListener('click', () => {
+        if (judgeCurrentStep > 0) {
+          renderJudgeWalkthroughStep(judgeCurrentStep - 1);
+        }
+      });
+
+      DOM.walkthroughNextBtn.addEventListener('click', () => {
+        if (judgeCurrentStep < JUDGE_STEPS.length - 1) {
+          renderJudgeWalkthroughStep(judgeCurrentStep + 1);
+        } else {
+          closeJudgeWalkthrough();
+        }
+      });
+
+      /* -------------------------------------------------------------
+         FEATURE 2: RECORDING MODE ENGINE (?rec=1 and ?rec=2)
+         ?rec=1 on URL: hide header chip row, tour, demo drawer.
+         "Play demo" button runs a 12-second sequence on Screen 1:
+         (62 → 65 on commit, then to 84, then Unlocked state), pausing ~1s each.
+         ?rec=2 on URL: ledger: select Jayanagar, then press Pause store (~6s).
+         Keep "Concept prototype · sample data" chip visible in both.
+         ------------------------------------------------------------- */
+      let isRecordingSequenceRunning = false;
+
+      function checkRecordingMode() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rec = urlParams.get('rec');
+
+        if (rec === '1' || rec === '2') {
+          document.body.classList.add('recording-mode');
+          DOM.recordingControlBar.style.display = 'flex';
+          DOM.recordingModeLabel.textContent = rec === '1' ? 'Recording Mode: Screen 1 (12s)' : 'Recording Mode: Ledger (6s)';
+
+          DOM.btnPlayDemo.onclick = () => {
+            if (isRecordingSequenceRunning) return;
+            if (rec === '1') {
+              runRecordingSequenceScreen1();
+            } else if (rec === '2') {
+              runRecordingSequenceLedger();
+            }
+          };
+        }
+      }
+
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      async function runRecordingSequenceScreen1() {
+        isRecordingSequenceRunning = true;
+        DOM.btnPlayDemo.disabled = true;
+        DOM.playDemoBtnText.textContent = 'Playing (12s)...';
+
+        // Navigate to Screen 1
+        window.location.hash = '#unlock';
+        await sleep(600);
+
+        // State 0: Baseline 62 packs / 21 neighbours
+        const k = DATA.catchments.find(c => c.id === 1);
+        k.packs = 62;
+        k.neighbours = 21;
+        DATA.userCommitted = false;
+        DATA.unlockedOverride = false;
+        DATA.shortOverride = false;
+        DATA.userPacksSelected = 3;
+        DOM.consentCheckbox.checked = false;
+        renderUnlockScreen();
+        await sleep(1500);
+
+        // State 1: Consent checked
+        DOM.consentCheckbox.checked = true;
+        renderUnlockScreen();
+        await sleep(1000);
+
+        // State 2: Member commits 3 packs (62 -> 65)
+        DATA.userCommitted = true;
+        DATA.userCommittedPacks = 3;
+        k.packs = 65;
+        k.neighbours = 22;
+        DATA.lastAction = 'Recording: Committed 3 packs (62 → 65)';
+        renderUnlockScreen();
+        renderLedgerTable();
+        renderInspectorPanel();
+        updateGateFunnel();
+        DOM.precommitSuccessToast.style.display = 'flex';
+        DOM.toastMessageText.textContent = "You're in. 19 more packs to unlock.";
+        await sleep(2200);
+
+        // State 3: Progressing towards 84 packs (simulating community additions)
+        k.packs = 74;
+        k.neighbours = 25;
+        renderUnlockScreen();
+        await sleep(1200);
+
+        // State 4: Reach threshold 84 packs
+        k.packs = 84;
+        k.neighbours = 28;
+        DATA.unlockedOverride = true;
+        DATA.lastAction = 'Recording: 84 packs threshold reached';
+        renderUnlockScreen();
+        renderLedgerTable();
+        renderInspectorPanel();
+        updateGateFunnel();
+        await sleep(1500);
+
+        // State 5: Unlocked Gate State animation (solid green ring and open gate)
+        DOM.unlockHeading.textContent = 'Unlocked. Stock will land pre-sold.';
+        DOM.neighbourHeadline.textContent = 'Threshold reached (84 / 84 packs)!';
+        DOM.neighbourSubline.textContent = '28 neighbours joined. Opening order secured.';
+        DOM.toastMessageText.textContent = "Threshold unlocked! Stock lands pre-sold.";
+        await sleep(2500);
+
+        DOM.btnPlayDemo.disabled = false;
+        DOM.playDemoBtnText.textContent = 'Replay demo';
+        isRecordingSequenceRunning = false;
+      }
+
+      async function runRecordingSequenceLedger() {
+        isRecordingSequenceRunning = true;
+        DOM.btnPlayDemo.disabled = true;
+        DOM.playDemoBtnText.textContent = 'Playing (6s)...';
+
+        // Navigate to Screen 3
+        window.location.hash = '#ledger';
+        await sleep(800);
+
+        // Select Jayanagar (id: 6)
+        DATA.selectedCatchmentId = 6;
+        const jayanagar = DATA.catchments.find(c => c.id === 6);
+        jayanagar.isPaused = false; // ensure clean start
+        renderLedgerTable();
+        renderInspectorPanel();
+        highlightTargetElement('#wastageInspectorPanel');
+        await sleep(2000);
+
+        // Press Pause store
+        jayanagar.isPaused = true;
+        DATA.lastAction = 'Recording: Paused store Jayanagar (above 25% for 7 days)';
+        renderLedgerTable();
+        renderInspectorPanel();
+        updateGateFunnel();
+        await sleep(2500);
+
+        DOM.btnPlayDemo.disabled = false;
+        DOM.playDemoBtnText.textContent = 'Replay demo';
+        isRecordingSequenceRunning = false;
+      }
 
       /* -------------------------------------------------------------
          GUIDED TOUR (5 Steps, 30s)
@@ -4119,6 +4466,50 @@
 
     })();
   </script>
+
+  <!-- =============================================================
+       RECORDING MODE BAR (Shown only when ?rec=1 or ?rec=2)
+       ============================================================= -->
+  <div class="recording-control-bar" id="recordingControlBar">
+    <span class="recording-status-dot"></span>
+    <span id="recordingModeLabel" style="font-size: 0.84rem; font-weight: 700; color: var(--forest-green);">Rec Mode Active</span>
+    <button class="btn-play-demo" id="btnPlayDemo">
+      <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span id="playDemoBtnText">Play demo</span>
+    </button>
+  </div>
+
+  <!-- =============================================================
+       JUDGE WALKTHROUGH FLOATING CARD (5 Steps)
+       ============================================================= -->
+  <div class="walkthrough-guide-card" id="judgeWalkthroughCard" role="region" aria-label="Judge Walkthrough Guide">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span class="guide-step-tag" id="walkthroughStepTag">Step 1 of 5</span>
+      <button class="close-btn" id="closeWalkthroughBtn" aria-label="Close walkthrough" style="width: 32px; height: 32px;">
+        <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <h4 class="guide-title" id="walkthroughTitle">Open Screen 2: Anchor Page</h4>
+    
+    <div class="guide-quote" id="walkthroughQuote">
+      "A gym member scans this QR."
+    </div>
+
+    <p class="guide-detail" id="walkthroughDetail">
+      Local physical touchpoints convert member footfall into pre-commit demand.
+    </p>
+
+    <div class="guide-nav-row">
+      <button class="btn btn-secondary" id="walkthroughPrevBtn" style="min-height: 38px; padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+        Previous
+      </button>
+      <button class="btn btn-primary" id="walkthroughNextBtn" style="min-height: 38px; padding: 0.35rem 1.1rem; font-size: 0.82rem;">
+        Next Step →
+      </button>
+    </div>
+  </div>
+
 </body>
 
 </html>
