@@ -4,9 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Earn the Shelf — Pincode Demand Ledger · Concept Prototype</title>
+  <title>Earn the Shelf · Concept prototype</title>
   <meta name="description"
     content="A demand-led launch strategy prototype for organic high-protein milk (HP Milk) demonstrating pre-commit unlock, anchor QR mechanics, and the control tower ledger.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F6F1E7">
+
+  <!-- SVG Favicon: small milk-drop in forest green with marigold accent -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://earn-the-shelf.vercel.app/">
+  <meta property="og:title" content="Earn the Shelf">
+  <meta property="og:description" content="Pincode Demand Ledger · concept prototype">
+  <meta property="og:image" content="https://earn-the-shelf.vercel.app/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://earn-the-shelf.vercel.app/">
+  <meta name="twitter:title" content="Earn the Shelf">
+  <meta name="twitter:description" content="Pincode Demand Ledger · concept prototype">
+  <meta name="twitter:image" content="https://earn-the-shelf.vercel.app/og.png">
+
+  <!-- Performance: Preconnect & Preload Fonts with font-display: swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap">
@@ -1975,17 +1998,24 @@
         <div class="phone-frame">
           <div class="phone-screen-content">
 
+            <div style="margin-bottom: 0.25rem;">
+              <h1 class="page-title" id="unlockHeading" style="font-size: 1.7rem; margin-bottom: 0.35rem;">Unlock HP Coffee for your area.</h1>
+              <p class="page-subtitle" style="font-size: 0.95rem; margin-bottom: 1rem;">
+                Pre-commit now. Nothing ships until your neighbours say yes.
+              </p>
+            </div>
+
             <!-- Unlocked State Banner -->
             <div id="unlockStateBanner" class="state-banner unlocked">
               <span class="state-pill">Gate step 1 done: pre-commit</span>
-              <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Unlocked. Stock will land pre-sold.</h3>
+              <h2 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Unlocked. Stock will land pre-sold.</h2>
               <p style="font-size: 0.85rem;">We'll message you when your first packs are on the way to your local store.</p>
             </div>
 
             <!-- Not-Filled State Banner -->
             <div id="notFilledStateBanner" class="state-banner not-filled">
               <span class="state-pill" style="color: var(--terracotta);">Threshold not reached</span>
-              <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Not enough neighbours yet.</h3>
+              <h2 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Not enough neighbours yet.</h2>
               <p style="font-size: 0.85rem;">Not enough neighbours yet. Nothing ships, so nothing is wasted. We'll try again after the next round.</p>
               <button class="btn btn-secondary" id="btnStartNextRound" style="margin-top: 0.75rem; min-height: 44px; font-size: 0.82rem; border-color: var(--forest-green); color: var(--forest-green);">
                 Start next round
@@ -2040,7 +2070,7 @@
               <!-- Flavour Voting Callout -->
               <div class="flavour-vote-box" style="margin-top: 1rem;">
                 <div>
-                  <h4>Vote next flavour</h4>
+                  <h2 style="font-size: 1rem; color: #794C03; margin: 0;">Vote next flavour</h2>
                   <p>Help decide which variant unlocks next.</p>
                 </div>
                 <button class="btn btn-secondary" id="openFlavourVoteBtn" style="min-height: 44px; font-size: 0.85rem;">
@@ -2051,23 +2081,21 @@
 
             <!-- Interactive Pre-Commit Form Card -->
             <div class="premium-card">
-              <h1 class="page-title" id="unlockHeading" style="font-size: 1.7rem; margin-bottom: 0.35rem;">Unlock HP Coffee for your area.</h1>
-              <p class="page-subtitle" style="font-size: 0.95rem; margin-bottom: 1.25rem;">
-                Pre-commit now. Nothing ships until your neighbours say yes.
-              </p>
+              
 
               <div class="stepper-container">
                 <div class="stepper-label">
                   <span>Your packs for the opening week</span>
                   <span id="packQuantityLabel" style="color: var(--green); font-weight: 700;">3 packs</span>
                 </div>
-                <div class="stepper-control">
-                  <button class="step-btn" id="btnMinusPack" aria-label="Decrease packs">−</button>
+                <div class="stepper-control" role="spinbutton" tabindex="0" id="stepperSpinbutton"
+                  aria-label="Packs for opening week" aria-valuenow="3" aria-valuemin="1" aria-valuemax="6" aria-valuetext="3 packs">
+                  <button class="step-btn" id="btnMinusPack" aria-label="Decrease packs" tabindex="-1">−</button>
                   <div class="step-value-wrap">
                     <span class="step-value" id="stepperDisplay">3</span>
                     <span class="step-subtext">packs</span>
                   </div>
-                  <button class="step-btn" id="btnPlusPack" aria-label="Increase packs">+</button>
+                  <button class="step-btn" id="btnPlusPack" aria-label="Increase packs" tabindex="-1">+</button>
                 </div>
               </div>
 
@@ -2195,7 +2223,7 @@
         <div class="tentcard-wrapper">
           <div class="tentcard-header">
             <div>
-              <h3 style="font-size: 1.4rem;">Physical Counter Tent-Card Mockup</h3>
+              <h2 style="font-size: 1.4rem;">Physical Counter Tent-Card Mockup</h2>
               <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.25rem;">
                 Placed at reception desks and checkout counters to anchor QR traffic.
               </p>
@@ -2391,7 +2419,7 @@
           <div class="ledger-table-wrap">
             <div
               style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-              <h3 style="font-size: 1.1rem;">Catchment Operational Ledger (9)</h3>
+              <h2 style="font-size: 1.1rem;">Catchment Operational Ledger (9)</h2>
               <span style="font-size: 0.78rem; color: var(--text-muted);">Click any row to inspect</span>
             </div>
 
@@ -2416,7 +2444,7 @@
           <div class="wastage-panel" id="wastageInspectorPanel">
             <div>
               <span class="panel-header-badge">Catchment Inspector</span>
-              <h3 id="inspectorCatchmentName" style="font-size: 1.5rem; margin-top: 0.2rem;">
+              <h2 id="inspectorCatchmentName" style="font-size: 1.5rem; margin-top: 0.2rem;">
                 Gachibowli, Hyderabad
               </h3>
               <p id="inspectorStageNote" style="font-size: 0.85rem; color: var(--text-muted);">
@@ -2498,7 +2526,7 @@
         <!-- Gate Funnel Display -->
         <div class="gate-funnel-card">
           <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="font-size: 1.35rem;">Demand-Led Gate Funnel</h3>
+            <h2 style="font-size: 1.35rem;">Demand-Led Gate Funnel</h2>
             <span style="font-size: 0.82rem; color: var(--text-muted);">Illustrative progression through operational stages</span>
           </div>
 
@@ -2552,7 +2580,7 @@
           <!-- Who Pays Commercial Slider -->
           <div class="advanced-card">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <h4 style="font-size: 1.05rem;">Wastage Liability Schedule</h4>
+              <h3 style="font-size: 1.05rem;">Wastage Liability Schedule</h3>
               <span style="font-size: 0.8rem; font-weight: 700; color: var(--secondary-green);"
                 id="weekSliderLabel">Week 4</span>
             </div>
@@ -2580,7 +2608,7 @@
           <!-- Day-90 Run-rate Decision Panel -->
           <div class="advanced-card">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <h4 style="font-size: 1.05rem;">Day-90 Run-Rate Rule Engine</h4>
+              <h3 style="font-size: 1.05rem;">Day-90 Run-Rate Rule Engine</h3>
               <span style="font-size: 0.78rem; color: var(--text-muted);">Day-90 call</span>
             </div>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
@@ -2639,7 +2667,7 @@
     aria-labelledby="demoDrawerTitle">
     <div class="demo-drawer">
       <div class="drawer-header">
-        <h3 id="demoDrawerTitle" style="font-size: 1.25rem;">Demo Controls</h3>
+        <h2 id="demoDrawerTitle" style="font-size: 1.25rem;">Demo Controls</h2>
         <button class="close-btn" id="closeDemoBtn" aria-label="Close demo controls"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
 
@@ -2697,7 +2725,7 @@
       </div>
 
       <span class="tour-slide-badge" id="tourStepBadge">Slide Reference: Slide 1</span>
-      <h3 class="tour-slide-title" id="tourTitle">1. Neighbours pre-commit</h3>
+      <h2 class="tour-slide-title" id="tourTitle">1. Neighbours pre-commit</h2>
       <p class="tour-slide-body" id="tourBody">
         Instead of dumping cartons onto speculative grocery shelves, local consumers discover HP Milk via gym or
         building QR codes and pre-commit without paying upfront.
@@ -2721,7 +2749,7 @@
   <div class="modal-overlay bottom-sheet-mode" id="flavourModalOverlay" role="dialog" aria-modal="true"
     aria-labelledby="flavourModalTitle">
     <div class="tour-modal-card" style="max-width: 500px;">
-      <h3 class="tour-slide-title" id="flavourModalTitle">Vote next flavour</h3>
+      <h2 class="tour-slide-title" id="flavourModalTitle">Vote next flavour</h2>
       <p style="font-size: 0.85rem; color: var(--text-muted);">
         Vote which flavour unlocks next in your area.
       </p>
@@ -3054,6 +3082,65 @@
         return { total, reached84, provedConversion, liveQC, nextRing };
       }
 
+      
+      /* -------------------------------------------------------------
+         ACCESSIBILITY: FOCUS TRAPPING & ESCAPE KEY CONTROLS
+         ------------------------------------------------------------- */
+      let activeFocusTrap = null;
+
+      function trapFocus(modalElement, returnFocusElement) {
+        if (!modalElement) return;
+        const focusableSelectors = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+        const focusableElements = Array.from(modalElement.querySelectorAll(focusableSelectors));
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        firstElement.focus();
+
+        const keyHandler = (e) => {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            if (activeFocusTrap && typeof activeFocusTrap.closeHandler === 'function') {
+              activeFocusTrap.closeHandler();
+            }
+            return;
+          }
+
+          if (e.key === 'Tab') {
+            if (e.shiftKey) {
+              if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+              }
+            } else {
+              if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+              }
+            }
+          }
+        };
+
+        modalElement.addEventListener('keydown', keyHandler);
+
+        activeFocusTrap = {
+          modal: modalElement,
+          returnFocus: returnFocusElement,
+          keyHandler: keyHandler,
+          closeHandler: null
+        };
+      }
+
+      function releaseFocusTrap() {
+        if (!activeFocusTrap) return;
+        activeFocusTrap.modal.removeEventListener('keydown', activeFocusTrap.keyHandler);
+        if (activeFocusTrap.returnFocus && typeof activeFocusTrap.returnFocus.focus === 'function') {
+          activeFocusTrap.returnFocus.focus();
+        }
+        activeFocusTrap = null;
+      }
+
       /* -------------------------------------------------------------
          DOM CACHE
          ------------------------------------------------------------- */
@@ -3254,6 +3341,11 @@
 
         // Stepper label & displays
         DOM.stepperDisplay.textContent = DATA.userPacksSelected;
+        const spin = document.getElementById('stepperSpinbutton');
+        if (spin) {
+          spin.setAttribute('aria-valuenow', DATA.userPacksSelected);
+          spin.setAttribute('aria-valuetext', `${DATA.userPacksSelected} packs`);
+        }
         DOM.packQuantityLabel.textContent = `${DATA.userPacksSelected} packs`;
         DOM.avatarMoreCount.textContent = `+${Math.max(0, neighbours - 6)}`;
 
@@ -3300,6 +3392,35 @@
           DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs to unlock.`;
           DOM.neighbourSubline.textContent = '60% demand threshold unlocks store opening week.';
         }
+      }
+
+      
+      // Stepper Spinbutton keyboard navigation (ArrowUp, ArrowRight, ArrowDown, ArrowLeft, Home, End)
+      const stepperSpin = document.getElementById('stepperSpinbutton');
+      if (stepperSpin) {
+        stepperSpin.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (DATA.userPacksSelected < 6) {
+              DATA.userPacksSelected++;
+              renderUnlockScreen();
+            }
+          } else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            if (DATA.userPacksSelected > 1) {
+              DATA.userPacksSelected--;
+              renderUnlockScreen();
+            }
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            DATA.userPacksSelected = 1;
+            renderUnlockScreen();
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            DATA.userPacksSelected = 6;
+            renderUnlockScreen();
+          }
+        });
       }
 
       // Stepper Actions with debouncing
@@ -3415,9 +3536,14 @@
       DOM.openFlavourVoteBtn.addEventListener('click', () => {
         renderFlavours();
         DOM.flavourModalOverlay.classList.add('active');
+        trapFocus(DOM.flavourModalOverlay.querySelector('.tour-modal-card'), DOM.openFlavourVoteBtn);
+        if (activeFocusTrap) activeFocusTrap.closeHandler = closeFlavourModal;
       });
 
-      const closeFlavourModal = () => DOM.flavourModalOverlay.classList.remove('active');
+      const closeFlavourModal = () => {
+        DOM.flavourModalOverlay.classList.remove('active');
+        releaseFocusTrap();
+      };
       DOM.closeFlavourBtn.addEventListener('click', closeFlavourModal);
       DOM.closeFlavourXBtn.addEventListener('click', closeFlavourModal);
       DOM.flavourModalOverlay.addEventListener('click', (e) => {
@@ -3994,9 +4120,14 @@
          ------------------------------------------------------------- */
       DOM.openDemoBtn.addEventListener('click', () => {
         DOM.demoDrawerOverlay.classList.add('active');
+        trapFocus(DOM.demoDrawerOverlay.querySelector('.demo-drawer'), DOM.openDemoBtn);
+        if (activeFocusTrap) activeFocusTrap.closeHandler = closeDemoDrawer;
       });
 
-      const closeDemoDrawer = () => DOM.demoDrawerOverlay.classList.remove('active');
+      const closeDemoDrawer = () => {
+        DOM.demoDrawerOverlay.classList.remove('active');
+        releaseFocusTrap();
+      };
       DOM.closeDemoBtn.addEventListener('click', closeDemoDrawer);
       DOM.demoDrawerOverlay.addEventListener('click', (e) => {
         if (e.target === DOM.demoDrawerOverlay) closeDemoDrawer();
@@ -4218,10 +4349,13 @@
         document.querySelectorAll('.walkthrough-target-highlight').forEach(el => {
           el.classList.remove('walkthrough-target-highlight');
         });
+        releaseFocusTrap();
       }
 
       DOM.btnJudgeWalkthrough.addEventListener('click', () => {
         renderJudgeWalkthroughStep(0);
+        trapFocus(DOM.judgeWalkthroughCard, DOM.btnJudgeWalkthrough);
+        if (activeFocusTrap) activeFocusTrap.closeHandler = closeJudgeWalkthrough;
       });
 
       DOM.closeWalkthroughBtn.addEventListener('click', closeJudgeWalkthrough);
@@ -4428,9 +4562,14 @@
       DOM.openTourBtn.addEventListener('click', () => {
         renderTourStep(0);
         DOM.tourModalOverlay.classList.add('active');
+        trapFocus(DOM.tourModalOverlay.querySelector('.tour-modal-card'), DOM.openTourBtn);
+        if (activeFocusTrap) activeFocusTrap.closeHandler = closeTourModal;
       });
 
-      const closeTourModal = () => DOM.tourModalOverlay.classList.remove('active');
+      const closeTourModal = () => {
+        DOM.tourModalOverlay.classList.remove('active');
+        releaseFocusTrap();
+      };
       DOM.closeTourBtn.addEventListener('click', closeTourModal);
       DOM.tourModalOverlay.addEventListener('click', (e) => {
         if (e.target === DOM.tourModalOverlay) closeTourModal();
@@ -4490,7 +4629,7 @@
       </button>
     </div>
 
-    <h4 class="guide-title" id="walkthroughTitle">Open Screen 2: Anchor Page</h4>
+    <h2 class="guide-title" id="walkthroughTitle" style="font-size: 1.25rem;">Open Screen 2: Anchor Page</h2>
     
     <div class="guide-quote" id="walkthroughQuote">
       "A gym member scans this QR."
