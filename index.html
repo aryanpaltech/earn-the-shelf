@@ -1999,7 +1999,7 @@
           <div class="phone-screen-content">
 
             <div style="margin-bottom: 0.25rem;">
-              <h1 class="page-title" id="unlockHeading" style="font-size: 1.7rem; margin-bottom: 0.35rem;">Unlock HP Coffee for your area.</h1>
+              <h1 class="page-title" id="unlockHeading" style="font-size: 1.7rem; margin-bottom: 0.35rem;">Unlock HP Milk for your area.</h1>
               <p class="page-subtitle" style="font-size: 0.95rem; margin-bottom: 1rem;">
                 Pre-commit now. Nothing ships until your neighbours say yes.
               </p>
@@ -3369,7 +3369,7 @@
           DOM.ringCircle.style.stroke = 'var(--terracotta)';
           DOM.gateIcon.innerHTML = SVG_LOCK;
           DOM.gateIcon.classList.remove('gate-open');
-          DOM.unlockHeading.textContent = 'Unlock HP Coffee for your area.';
+          DOM.unlockHeading.textContent = 'Unlock HP Milk for your area.';
           DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs needed.`;
           DOM.neighbourSubline.textContent = 'Window expired. No stock dispatched. No retail waste.';
         } else if (packs >= target || DATA.unlockedOverride) {
@@ -3388,7 +3388,7 @@
           DOM.notFilledStateBanner.style.display = 'none';
           DOM.ringCircle.style.stroke = 'var(--green)';
           DOM.gateIcon.innerHTML = SVG_LOCK;
-          DOM.unlockHeading.textContent = 'Unlock HP Coffee for your area.';
+          DOM.unlockHeading.textContent = 'Unlock HP Milk for your area.';
           DOM.neighbourHeadline.textContent = `${neighbours} neighbours are in. ${remaining} more packs to unlock.`;
           DOM.neighbourSubline.textContent = '60% demand threshold unlocks store opening week.';
         }
