@@ -2412,9 +2412,11 @@
           <!-- Ledger Catchment Rows -->
           <div class="ledger-table-wrap">
             <div
-              style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
               <h2 style="font-size: 1.1rem;">Catchment Operational Ledger (9)</h2>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Click any row to inspect</span>
+              <span class="table-instruction-hint" style="font-size: 0.78rem; font-weight: 600; color: var(--forest-green); background: #EAE3D4; padding: 0.25rem 0.65rem; border-radius: 999px;">
+                👈 Click any row to inspect & manage
+              </span>
             </div>
 
             <div class="table-responsive">
@@ -2440,7 +2442,7 @@
               <span class="panel-header-badge">Catchment Inspector</span>
               <h2 id="inspectorCatchmentName" style="font-size: 1.5rem; margin-top: 0.2rem;">
                 Gachibowli, Hyderabad
-              </h3>
+              </h2>
               <p id="inspectorStageNote" style="font-size: 0.85rem; color: var(--text-muted);">
                 Ready for Ring A release to quick-commerce
               </p>
